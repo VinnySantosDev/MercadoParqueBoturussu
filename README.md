@@ -1,11 +1,11 @@
-# Projeto ERP - Mercado Parque Boturussu
+# Projeto ERP - Supermercado Parque Boturussu
 
 **Projeto Integrador - Modelagem de Dados | Primeira Entrega: do problema real ao Modelo Conceitual de Dados**
 
 Universidade Cidade de São Paulo (UNICID) · Engenharia de Software · 2º semestre de 2026
 Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos Ferraro
 
-> Este repositório documenta a análise de um mercado de bairro real e o modelo conceitual (DER em notação Chen) que servirá de base para as próximas entregas: modelo lógico, normalização, modelo físico e banco de dados.
+> Análise de um mercado de bairro real e o modelo conceitual (DER em notação Chen) que ela produziu. Esse modelo é a base das próximas entregas: modelo lógico, normalização, modelo físico e banco de dados.
 
 ## Sumário
 
@@ -47,6 +47,7 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 | Vinícius Henrique Silva Ferreira | 47449438 |
 | Vinícius Santos Conceição | 47451530 |
 | Yuri Bezerra Rodrigues Silva | 47674628 |
+
 ---
 
 ## 2. Caracterização da empresa
@@ -55,7 +56,7 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 
 | Item | Descrição |
 | --- | --- |
-| Nome | Mercado Parque Boturussu |
+| Nome | Supermercado Parque Boturussu |
 | Segmento | Comércio varejista de alimentos, mercado de bairro (micro/pequena empresa) |
 | Tempo de atuação | 17 anos no mesmo ponto |
 | Porte operacional | Aproximadamente 6 funcionários; 3 em operação por turno; 2 caixas (PDV) |
@@ -66,21 +67,21 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 
 ### 2.2 Como a empresa funciona hoje
 
-A operação diária é conduzida por três funcionários por turno, com papéis que se sobrepõem: um permanece no caixa, um atua na padaria/balança (onde são pesados carnes, frutas e verduras) e um terceiro cobre almoços e faz o abastecimento das gôndolas. As atividades centrais são atendimento ao cliente, compra junto a fornecedores e conferência de mercadoria.
+Cada turno tem três funcionários, com papéis que se sobrepõem: um fica no caixa, outro na padaria/balança (onde se pesam carnes, frutas e verduras) e o terceiro cobre almoços e abastece as gôndolas. O trabalho principal é atender clientes, comprar de fornecedores e conferir mercadoria.
 
-**Compras.** A necessidade de compra é percebida visualmente: quando falta produto na gôndola ou no estoque. O pedido é feito por WhatsApp, pelos aplicativos oficiais das redes distribuidoras maiores ou diretamente a vendedores que passam periodicamente. Na chegada da mercadoria, a conferência é feita em duas etapas: primeiro o volume declarado na nota, depois item a item. As notas e boletos são guardados fisicamente; a maioria das compras é paga em boletos parcelados em 7, 14 e 21 dias, e alguns fornecedores só aceitam pagamento à vista.
+**Compras.** A falta de produto é percebida olhando a gôndola ou o estoque. O pedido sai por WhatsApp, pelos aplicativos das distribuidoras maiores ou com vendedores que passam no mercado de tempos em tempos. Quando a mercadoria chega, a conferência tem duas etapas: primeiro o volume declarado na nota, depois item a item. Notas e boletos ficam guardados em papel. A maioria das compras é paga em boletos de 7, 14 e 21 dias; alguns fornecedores só aceitam pagamento à vista.
 
-**Preço.** O preço de venda é formado a partir do valor de cada produto informado na nota do fornecedor, acrescido de uma margem: 35% a 40% para itens comuns de giro diário e margem maior para produtos que chegam com custo baixo. Como o mesmo produto é comprado de fornecedores diferentes, o custo varia de compra para compra. No leite, por exemplo, a diferença chega a quase um real por unidade. A alteração do preço no sistema do caixa é manual e feita apenas por parte dos funcionários.
+**Preço.** O preço de venda é o valor do produto na nota do fornecedor mais uma margem: 35% a 40% nos itens comuns de giro diário e margem maior nos produtos que chegam com custo baixo. Como o mesmo produto vem de fornecedores diferentes, o custo muda de uma compra para outra; no leite, a diferença chega a quase um real por unidade. O preço é alterado à mão no sistema do caixa, e só alguns funcionários fazem isso.
 
-**Estoque.** Não há registro das quantidades recebidas. O estoque é conhecido por conferência manual: "quando não temos mais no estoque e está pouco na gôndola". A política informal é manter parte do produto no depósito enquanto o restante fica exposto na gôndola. A conferência física acontece apenas quando se vai fazer um novo pedido ao fornecedor.
+**Estoque.** As quantidades recebidas não são anotadas. O estoque é conhecido olhando: "quando não temos mais no estoque e está pouco na gôndola". A prática é deixar parte do produto no depósito e o resto exposto. A contagem física só acontece quando se vai fazer um novo pedido.
 
-**Validade.** A checagem é manual e concentrada nos produtos de giro lento; alimentos básicos (arroz, feijão, lentilha) são os que exigem vigilância mais rigorosa. Produtos vencidos não são registrados: são separados em um local do estoque para que o fornecedor faça a troca.
+**Validade.** A checagem é manual e se concentra nos produtos de giro lento. Arroz, feijão e lentilha são os que pedem mais atenção. Produto vencido não é registrado: vai para um canto do estoque até o fornecedor fazer a troca.
 
-**Vendas.** As vendas são registradas no sistema do caixa, com leitura de código de barras (há exceções, como alguns formatos de cerveja que deixaram de vir com código). São aceitos dinheiro, cartão de débito e crédito, Pix e vale. Descontos são concedidos quando o produto está perto do vencimento, e apenas os funcionários que alteram preços podem aplicá-los. Trocas e devoluções ocorrem quando há defeito no produto ou validade vencida não percebida.
+**Vendas.** As vendas passam pelo sistema do caixa com leitura de código de barras. Há exceções, como alguns formatos de cerveja que deixaram de vir com código. O mercado aceita dinheiro, débito, crédito, Pix e vale. Dá desconto quando o produto está perto de vencer, e só quem altera preço pode aplicar. Trocas e devoluções acontecem por defeito ou por validade vencida que passou despercebida.
 
-**Fiado.** É concedido apenas a clientes frequentes e reconhecidamente bons pagadores. O controle é feito em cadernos, com nome e valor; o cliente pode ter várias compras em aberto e pagar parceladamente, e a baixa acontece quando o nome é riscado do caderno.
+**Fiado.** Só para clientes frequentes que costumam pagar. O controle fica em cadernos, com nome e valor. O cliente pode ter várias compras em aberto e pagar aos poucos; quando quita, o nome é riscado.
 
-**Caixa e financeiro.** O fechamento é feito somando as vendas das máquinas de cartão com o relatório do sistema do caixa; o faturamento do dia é anotado em um caderno à parte. Não há fundo de troco fixo, não há controle de sangrias e não é possível identificar qual funcionário realizou determinada venda. Os boletos são separados fisicamente e ordenados por prioridade; além dos fornecedores, há Simples Nacional, folha de funcionários, internet e outras despesas. Quando o dinheiro não é suficiente na data, a conta é paga com juros.
+**Caixa e financeiro.** O fechamento soma as vendas das maquininhas com o relatório do sistema do caixa, e o faturamento do dia é anotado num caderno à parte. Não há fundo de troco fixo nem controle de sangria, e não dá para saber qual funcionário fez cada venda. Os boletos ficam separados em papel, por ordem de prioridade. Além dos fornecedores, há Simples Nacional, folha, internet e outras despesas. Quando falta dinheiro no vencimento, a conta é paga com juros.
 
 ### 2.3 Informações críticas para o negócio
 
@@ -101,25 +102,25 @@ Segundo o próprio gerente, as informações que sustentam as decisões do merca
 
 ## 3. Justificativa da escolha
 
-A escolha do Mercado Parque Boturussu não se deve à facilidade de acesso à empresa, mas ao fato de ela reunir, em escala pequena e observável, exatamente os elementos que um projeto de modelagem de dados precisa ter: **processos completos e interligados, informação dispersa em suportes não integrados e decisões gerenciais represadas por falta de dado confiável**.
+Escolhemos o Supermercado Parque Boturussu porque ele reúne, em escala pequena e fácil de observar, o que um projeto de modelagem de dados precisa: processos completos e ligados entre si, informação espalhada em suportes que não se integram e decisões do gerente travadas por falta de dado confiável.
 
-**a) Existem processos reais, repetitivos e encadeados.** O mercado executa diariamente um ciclo fechado: compra → recebimento → formação de preço → estoque → venda → caixa → financeiro. Cada etapa consome informação produzida pela anterior (o custo da nota forma o preço; o preço é cobrado na venda; a venda alimenta o caixa; o caixa e os boletos formam o resultado). Esse encadeamento é o que permite exercitar integração entre processos, e não apenas cadastros isolados.
+**a) Os processos são reais, repetitivos e encadeados.** Todo dia o mercado percorre o mesmo ciclo: compra → recebimento → formação de preço → estoque → venda → caixa → financeiro. Cada etapa usa o que a anterior produziu: o custo da nota forma o preço, o preço é cobrado na venda, a venda alimenta o caixa, e caixa e boletos dão o resultado. Isso permite trabalhar integração entre processos, e não só cadastros soltos.
 
-**b) Há desorganização de informação documentada, não suposta.** A entrevista revelou quatro suportes distintos que não conversam entre si: o sistema do caixa (vendas), os aplicativos das maquininhas (recebíveis de cartão e Pix), cadernos (faturamento do dia e fiado) e papéis físicos (notas e boletos). A consequência é direta: o mercado registra vendas, mas não registra entradas de mercadoria; logo, não tem estoque. Registra recebimentos financeiros, mas em três lugares diferentes; logo, não tem posição de caixa consolidada.
+**b) A desorganização da informação foi constatada na entrevista.** Há quatro suportes que não conversam: o sistema do caixa (vendas), os aplicativos das maquininhas (recebíveis de cartão e Pix), cadernos (faturamento do dia e fiado) e papéis (notas e boletos). O mercado registra vendas mas não registra entradas de mercadoria, por isso não tem estoque. E registra recebimentos em três lugares diferentes, por isso não tem posição de caixa consolidada.
 
-**c) A necessidade de integração é explícita.** As três prioridades declaradas pelo gerente (controle de estoque, registro unificado de informações e lista de validades) não são funcionalidades independentes: as três dependem de um mesmo dado que hoje não existe, a **entrada de mercadoria com quantidade, custo e validade**. Um único registro bem modelado resolve simultaneamente estoque, validade e apuração de lucro. Esse é o tipo de descoberta que justifica a modelagem conceitual antes de qualquer tela.
+**c) O próprio gerente pediu integração.** As três prioridades que ele citou (controle de estoque, registro unificado do que hoje fica fora do sistema e lista de validades) dependem do mesmo dado, que hoje não existe: a entrada de mercadoria com quantidade, custo e validade. Um único registro bem modelado atende estoque, validade e apuração de lucro ao mesmo tempo. Por isso a modelagem conceitual vem antes de qualquer tela.
 
-**d) O porte é adequado ao escopo de um ERP didático.** Com 6 funcionários, 2 caixas e algumas dezenas de fornecedores, o negócio é pequeno o bastante para ser compreendido por inteiro dentro do prazo do projeto e grande o bastante para exigir todos os construtos da modelagem conceitual: entidades fortes, entidades associativas, relacionamentos N:N com atributos, relacionamentos opcionais, atributos derivados, compostos e multivalorados, além de regras de autorização por funcionário.
+**d) O porte cabe no escopo de um ERP didático.** Com 6 funcionários, 2 caixas e algumas dezenas de fornecedores, dá para entender o negócio inteiro dentro do prazo do projeto. Ao mesmo tempo, ele exige todos os construtos da modelagem conceitual: entidades fortes e associativas, relacionamentos N:N com atributos, relacionamentos opcionais, atributos derivados, compostos e multivalorados e regras de autorização por funcionário.
 
-**e) Há um problema de negócio com valor mensurável.** Perdas por vencimento e juros por atraso de boleto são prejuízos hoje invisíveis: não são medidos porque não são registrados. O modelo proposto torna essas duas perdas visíveis e, portanto, gerenciáveis, o que dá ao projeto um objetivo de negócio verificável, e não apenas acadêmico.
+**e) O prejuízo pode ser medido.** Perdas por vencimento e juros de boleto atrasado não aparecem hoje porque ninguém registra. O modelo proposto passa a registrar as duas coisas, o que dá ao projeto um objetivo de negócio que pode ser verificado.
 
-> **Delimitação de escopo.** Esta entrega modela o núcleo operacional do negócio (produtos, estoque, compras, vendas, caixa, fiado e contas a pagar). Ficam fora do escopo conceitual, por decisão justificada: folha de pagamento detalhada, escrituração fiscal/contábil (SPED, emissão de NF-e), e-commerce e programa de fidelidade. Essas áreas são tratadas na seção [17.3](#173-escalabilidade-integração-e-evolução-do-modelo) como pontos de evolução para os quais o modelo já está preparado.
+> **Delimitação de escopo.** Esta entrega modela o núcleo operacional do negócio: produtos, estoque, compras, vendas, caixa, fiado e contas a pagar. Ficam de fora folha de pagamento detalhada, escrituração fiscal e contábil (SPED, emissão de NF-e), e-commerce e programa de fidelidade. A seção [17.3](#173-escalabilidade-integração-e-evolução-do-modelo) mostra como o modelo pode crescer para cobrir essas áreas.
 
 ---
 
 ## 4. Problemas identificados
 
-Cada problema abaixo foi extraído de uma resposta objetiva da entrevista, e não de suposição. A coluna "necessidade" é o que o sistema precisa passar a fazer, e é ela que gera os requisitos funcionais da seção 6.
+Cada problema abaixo vem de uma resposta da entrevista. A coluna "necessidade" diz o que o sistema precisa passar a fazer, e é dela que saem os requisitos funcionais da seção 6.
 
 ### 4.1 Quadro de problemas
 
@@ -148,13 +149,13 @@ Cada problema abaixo foi extraído de uma resposta objetiva da entrevista, e nã
 
 ### 4.2 As três prioridades declaradas pelo gerente
 
-> Perguntado sobre quais três problemas o sistema deveria resolver, o gerente respondeu: **(1) controle de estoque, (2) registro unificado de informações hoje anotadas fora do sistema (como o fiado) e (3) lista de validades**. As três convergem para um único ponto de origem: **o registro da entrada de mercadoria** (PB-01). Modelar bem essa entrada, com quantidade, custo e lote com validade, resolve simultaneamente o estoque (PB-02), a validade (PB-03), a perda (PB-04) e o lucro (PB-17). Essa constatação orientou a prioridade do modelo conceitual.
+> Perguntado sobre quais três problemas o sistema deveria resolver, o gerente respondeu: (1) controle de estoque, (2) registro unificado das informações anotadas fora do sistema, como o fiado, e (3) lista de validades. As três dependem do registro da entrada de mercadoria (PB-01). Com essa entrada modelada, com quantidade, custo e lote com validade, o sistema passa a ter estoque (PB-02), validade (PB-03), perda (PB-04) e lucro (PB-17). Por isso o modelo conceitual começou por ela.
 
 ---
 
 ## 5. Processos de negócio
 
-Foram identificados oito processos. Para cada um registrou-se quem participa, o que o inicia, o que acontece, qual informação é gerada e qual o resultado, exatamente o roteiro exigido pelo manual. Os processos P1 a P7 são operacionais; o P8 é um processo de decisão que hoje praticamente não existe por falta de dado.
+Identificamos oito processos. Para cada um registramos quem participa, o que o inicia, o que acontece, que informação gera e qual o resultado, seguindo o roteiro do manual. De P1 a P7 são processos operacionais. O P8 é um processo de decisão que hoje quase não acontece por falta de dado.
 
 ### P1 - Compra e recebimento de mercadoria
 
@@ -246,7 +247,7 @@ Foram identificados oito processos. Para cada um registrou-se quem participa, o 
 
 ### 5.1 Integração entre os processos
 
-Os processos não são independentes: o dado nasce em um e é consumido por outro. O mapa abaixo mostra essa dependência e é a base da coerência do modelo. Se uma dessas setas não puder ser percorrida no DER, o modelo está incompleto.
+Um processo gera o dado que outro usa. O mapa abaixo mostra essas dependências e serve de teste para o modelo: toda seta precisa poder ser percorrida no DER.
 
 ![Figura 1: mapa de integração entre os processos de negócio](docs/img/figura-01-integracao-processos.png)
 
@@ -271,7 +272,7 @@ Os processos não são independentes: o dado nasce em um e é consumido por outr
 
 ## 6. Requisitos funcionais
 
-Requisito funcional responde "**o que o sistema deve fazer**". Cada requisito abaixo nasce de um problema identificado na seção 4; nenhum foi copiado de modelo genérico. A coluna "origem" garante a rastreabilidade exigida pelo manual.
+Requisito funcional diz o que o sistema deve fazer. Cada requisito abaixo vem de um problema da seção 4, indicado na coluna "origem".
 
 ### 6.1 Produtos, preços e fornecedores
 
@@ -344,7 +345,7 @@ Requisito funcional responde "**o que o sistema deve fazer**". Cada requisito ab
 
 ## 7. Requisitos não funcionais
 
-Requisito não funcional responde "**como o sistema deve funcionar**": características, restrições e condições de operação. Não descrevem funções e, por isso, não geram entidades por si, mas condicionam decisões do modelo (por exemplo, exigir autoria e histórico impede a simples sobrescrita de valores).
+Requisito não funcional diz como o sistema deve funcionar: características, restrições e condições de operação. Eles não descrevem funções e não geram entidades sozinhos, mas afetam o modelo. Exigir autoria e histórico, por exemplo, impede que um valor seja simplesmente sobrescrito.
 
 | ID | Categoria | Requisito | Justificativa na realidade do mercado |
 | --- | --- | --- | --- |
@@ -362,13 +363,13 @@ Requisito não funcional responde "**como o sistema deve funcionar**": caracter�
 | RNF-12 | Interoperabilidade | O sistema deverá operar com leitor de código de barras e com balança, e permitir a importação futura de arquivos de nota fiscal eletrônica. | Equipamentos já existentes; digitação manual da nota é o gargalo do recebimento |
 | RNF-13 | Privacidade (LGPD) | Dados pessoais de clientes deverão ser coletados apenas para a finalidade do crédito fiado e acessíveis somente a usuários autorizados. | O cadastro de cliente só existe por causa do fiado |
 
-> **Distinção exigida pelo manual.** "O sistema deverá registrar vendas" é **funcional** (descreve uma função). "O registro de vendas deverá identificar o usuário responsável conforme seu perfil de acesso" é **não funcional** (descreve uma condição de funcionamento). Os dois aparecem separadamente acima (RF-22/RF-30 e RNF-01/RNF-02), e não como um item único.
+> **Distinção exigida pelo manual.** "O sistema deverá registrar vendas" é funcional: descreve uma função. "O registro de vendas deverá identificar o usuário responsável conforme seu perfil de acesso" é não funcional: descreve uma condição de funcionamento. Por isso os dois aparecem em itens separados (RF-22/RF-30 e RNF-01/RNF-02).
 
 ---
 
 ## 8. Regras de negócio
 
-As regras abaixo expressam o que **pode e o que não pode acontecer** no negócio. São elas que sustentam as cardinalidades da seção 14 e as decisões da seção 17: sempre que uma cardinalidade for questionada, a resposta estará em uma destas regras.
+As regras abaixo dizem o que pode e o que não pode acontecer no negócio. As cardinalidades da seção 14 e as decisões da seção 17 se apoiam nelas; quando uma cardinalidade for questionada, a justificativa está numa destas regras.
 
 ### 8.1 Produto, preço e fornecimento
 
@@ -429,7 +430,7 @@ As regras abaixo expressam o que **pode e o que não pode acontecer** no negóci
 
 ## 9. Restrições e políticas organizacionais
 
-Políticas são decisões da empresa que o sistema precisa respeitar, mesmo quando não decorrem de uma necessidade técnica. Foram separadas das regras de negócio porque podem mudar por decisão da gerência sem que o modelo de dados mude.
+Políticas são decisões da empresa que o sistema precisa respeitar, mesmo quando não há motivo técnico para elas. Ficaram separadas das regras de negócio porque a gerência pode mudá-las sem que o modelo de dados mude.
 
 | ID | Tipo | Política / restrição | Reflexo no sistema |
 | --- | --- | --- | --- |
@@ -450,7 +451,7 @@ Políticas são decisões da empresa que o sistema precisa respeitar, mesmo quan
 
 ## 10. Fluxogramas
 
-Os fluxogramas representam o processo **como ele acontece hoje e como passará a acontecer com o sistema**; não são ilustrações genéricas. A legenda a seguir distingue o que é ação humana do que é ação automática do sistema, e cada fluxo indica as entidades afetadas, garantindo a coerência entre processo, requisito e modelo de dados.
+Cada fluxograma mostra o processo como ele passa a funcionar com o sistema, a partir de como funciona hoje. A legenda separa o que a pessoa faz do que o sistema faz sozinho, e cada fluxo indica as entidades envolvidas, o que liga processo, requisito e modelo de dados.
 
 | Símbolo | Significado |
 | --- | --- |
@@ -462,7 +463,7 @@ Os fluxogramas representam o processo **como ele acontece hoje e como passará a
 
 ### 10.1 F1 - Compra e recebimento de mercadoria (P1)
 
-O fluxo começa onde hoje começa, na falta do produto, mas com uma diferença essencial: a falta passa a ser detectada pelo sistema (estoque abaixo do mínimo) e não pela gôndola vazia. As duas etapas de conferência descritas pelo gerente (volumes e item a item) estão representadas, assim como as duas saídas reais das divergências: aceitar com pendência ou recusar a entrega. O final do fluxo é o ponto de integração mais importante do projeto: o mesmo recebimento gera **lotes com validade** (resolve PB-03), **movimentação de entrada** (resolve PB-01/PB-02), **sugestão de novo preço** (resolve PB-05/PB-06) e **contas a pagar** (resolve PB-14).
+O fluxo começa, como hoje, na falta do produto. A diferença é que o sistema detecta a falta (estoque abaixo do mínimo) antes de a gôndola esvaziar. As duas etapas de conferência descritas pelo gerente, volumes e item a item, estão no fluxo, assim como as duas saídas possíveis quando há divergência: aceitar com pendência ou recusar a entrega. No final, o mesmo recebimento gera lotes com validade (PB-03), movimentação de entrada (PB-01/PB-02), sugestão de novo preço (PB-05/PB-06) e contas a pagar (PB-14). É o ponto em que mais processos se encontram no projeto.
 
 ![Figura 2: F1, compra e recebimento](docs/img/figura-02-f1-compra-recebimento.png)
 
@@ -472,7 +473,7 @@ Requisitos atendidos: RF-08 a RF-14, RF-05. Regras aplicadas: RN-10 a RN-15, RN-
 
 ### 10.2 F2 - Venda no caixa, incluindo fiado (P3)
 
-A primeira decisão do fluxo ("sessão de caixa aberta?") implementa a RN-20 e é o que torna possível, ao final do dia, saber quanto deveria haver na gaveta. O desvio para busca por nome atende aos produtos sem código de barras. O ramo do fiado aplica a política PO-04: o sistema verifica se o cliente está cadastrado, autorizado e dentro do limite, o que hoje é feito de memória. Ao final, a venda baixa o estoque por lote seguindo FEFO (RN-17) e dispara alerta de reposição quando o saldo fica abaixo do mínimo.
+A primeira decisão ("sessão de caixa aberta?") aplica a RN-20. Sem ela, não daria para saber no fim do dia quanto deveria haver na gaveta. A busca por nome atende os produtos sem código de barras. No ramo do fiado entra a política PO-04: o sistema verifica se o cliente está cadastrado, autorizado e dentro do limite, coisa que hoje é feita de memória. No final, a venda baixa o estoque por lote, pelo critério FEFO (RN-17), e gera alerta de reposição quando o saldo fica abaixo do mínimo.
 
 ![Figura 3: F2, venda no caixa](docs/img/figura-03-f2-venda-caixa.png)
 
@@ -482,7 +483,7 @@ Requisitos atendidos: RF-21 a RF-25, RF-28, RF-30. Regras aplicadas: RN-17, RN-2
 
 ### 10.3 F3 - Controle de validade e tratamento de perdas (P4)
 
-Este fluxo é a resposta direta ao problema que o gerente classificou como o principal ("validades seriam a principal… já que a vistoria é manual"). Ele inverte a lógica atual: em vez de a pessoa procurar produtos vencidos na gôndola, o sistema aponta os lotes que vencerão dentro do prazo de alerta e a pessoa vai conferir apenas esses. O fluxo também formaliza o que hoje não deixa nenhum registro: a perda, a separação para troca e a devolução do fornecedor.
+Este fluxo atende o problema que o gerente apontou como principal ("validades seriam a principal… já que a vistoria é manual"). Hoje a pessoa procura produtos vencidos na gôndola; com o sistema, ela recebe a lista dos lotes que vencem dentro do prazo de alerta e confere só esses. O fluxo também registra o que hoje se perde: a perda, a separação para troca e a devolução ao fornecedor.
 
 ![Figura 4: F3, controle de validade](docs/img/figura-04-f3-validade-perdas.png)
 
@@ -492,7 +493,7 @@ Requisitos atendidos: RF-17, RF-18, RF-04, RF-40. Regras aplicadas: RN-15, RN-18
 
 ### 10.4 F4 - Abertura, conferência e fechamento de caixa (P5)
 
-O fluxo começa na abertura da sessão, com o fundo de troco informado pelo operador (RN-30), porque sem esse valor inicial não há como calcular o esperado. O fechamento deixa de ser uma soma de relatórios de origens diferentes e passa a ser uma comparação entre o **valor esperado**, calculado pelo sistema, e o **valor contado** pelo operador. Sangrias entram no cálculo (hoje não existem formalmente) e a divergência, quando houver, é registrada com justificativa, algo que o mercado hoje sequer consegue detectar.
+O fluxo começa na abertura da sessão, com o fundo de troco informado pelo operador (RN-30); sem esse valor inicial não há como calcular o esperado. No fechamento, em vez de somar relatórios de origens diferentes, o operador compara o valor esperado, calculado pelo sistema, com o valor que contou. As sangrias, que hoje não são registradas, entram no cálculo, e qualquer diferença fica registrada com justificativa. Hoje o mercado nem consegue perceber essas diferenças.
 
 ![Figura 5: F4, sessão de caixa](docs/img/figura-05-f4-caixa.png)
 
@@ -502,7 +503,7 @@ Requisitos atendidos: RF-28, RF-29, RF-32, RF-37, RF-38. Regras aplicadas: RN-29
 
 ### 10.5 F5 - Contas a pagar e previsão de caixa (P7)
 
-Aqui está a funcionalidade que o gerente classificou como "sim, muito" útil: o alerta de caixa insuficiente. O fluxo mostra que esse alerta não é mágica: ele depende de dois registros que hoje não existem de forma estruturada, as contas a pagar com vencimento e os recebíveis de cartão/Pix com data prevista de crédito.
+Este fluxo contém o alerta de caixa insuficiente, que o gerente disse que seria "sim, muito" útil. O alerta depende de dois registros que hoje não existem de forma organizada: as contas a pagar com vencimento e os recebíveis de cartão e Pix com data prevista de crédito.
 
 ![Figura 6: F5, contas a pagar](docs/img/figura-06-f5-contas-pagar.png)
 
@@ -512,7 +513,7 @@ Requisitos atendidos: RF-33 a RF-36, RF-41. Regras aplicadas: RN-31 a RN-34; pol
 
 ### 10.6 F6 - Recebimento de fiado (P6)
 
-O fluxo substitui o caderno. A diferença conceitual está no fim: quando o saldo chega a zero, o cliente é considerado quitado, mas **o histórico permanece** (RNF-06), ao contrário da prática atual, em que riscar o nome apaga a informação. É esse histórico que permitirá, no futuro, decidir com base em comportamento de pagamento, e não apenas em memória.
+Este fluxo substitui o caderno. A diferença está no fim: quando o saldo chega a zero, o cliente fica quitado e o histórico continua guardado (RNF-06). Hoje, riscar o nome apaga a informação. Com o histórico, o mercado pode decidir novas concessões pelo comportamento de pagamento do cliente.
 
 ![Figura 7: F6, recebimento de fiado](docs/img/figura-07-f6-fiado.png)
 
@@ -520,13 +521,13 @@ O fluxo substitui o caderno. A diferença conceitual está no fim: quando o sald
 
 Requisitos atendidos: RF-26, RF-27, RF-30. Regras aplicadas: RN-26, RN-27.
 
-> **Coerência entre fluxograma e modelo.** Todo retângulo de cantos retos (ação do sistema) dos fluxos acima corresponde a uma operação sobre uma entidade existente no DER, e toda decisão em losango corresponde a uma regra de negócio da seção 8. Nenhuma atividade dos fluxogramas ficou sem suporte no modelo de dados, e nenhuma entidade do modelo deixou de ser utilizada por algum fluxo. Essa verificação cruzada está consolidada na matriz de rastreabilidade ([17.2](#172-matriz-de-rastreabilidade)).
+> **Coerência entre fluxograma e modelo.** Cada retângulo de cantos retos (ação do sistema) corresponde a uma operação sobre uma entidade do DER, e cada losango corresponde a uma regra da seção 8. Nenhuma atividade dos fluxogramas ficou sem suporte no modelo, e toda entidade é usada por pelo menos um fluxo. A matriz de rastreabilidade ([17.2](#172-matriz-de-rastreabilidade)) consolida essa verificação.
 
 ---
 
 ## 11. Entidades
 
-As entidades foram obtidas a partir dos substantivos relevantes dos requisitos e das regras de negócio, aplicando-se a pergunta exigida pelo manual: **"isso precisa existir como informação no banco de dados?"**. Nem todo substantivo virou entidade: a seção 11.3 lista explicitamente o que foi **rejeitado** e por quê, porque a decisão de não criar uma entidade também precisa ser justificada.
+As entidades saíram dos substantivos dos requisitos e das regras de negócio, com a pergunta do manual: "isso precisa existir como informação no banco de dados?". Nem todo substantivo virou entidade. A seção 11.3 lista os que foram descartados e o motivo de cada um.
 
 ### 11.1 Entidades do modelo
 
@@ -558,11 +559,11 @@ As entidades foram obtidas a partir dos substantivos relevantes dos requisitos e
 
 | Módulo | Entidades | Processos atendidos |
 | --- | --- | --- |
-| **Produtos e estoque** | CATEGORIA, PRODUTO, EMBALAGEM, HISTORICO_PRECO, LOTE, MOVIMENTACAO_ESTOQUE | P2, P4 |
-| **Compras e fornecedores** | FORNECEDOR, PEDIDO_COMPRA, RECEBIMENTO | P1 |
-| **Vendas e caixa** | VENDA, ITEM_VENDA, PAGAMENTO_VENDA, FORMA_PAGAMENTO, CAIXA, SESSAO_CAIXA, MOVIMENTACAO_CAIXA | P3, P5 |
-| **Financeiro e fiado** | CLIENTE, ABATIMENTO_FIADO, CONTA_PAGAR | P6, P7 |
-| **Pessoas e acesso** | FUNCIONARIO, PERMISSAO | Transversal (P1 a P8) |
+| Produtos e estoque | CATEGORIA, PRODUTO, EMBALAGEM, HISTORICO_PRECO, LOTE, MOVIMENTACAO_ESTOQUE | P2, P4 |
+| Compras e fornecedores | FORNECEDOR, PEDIDO_COMPRA, RECEBIMENTO | P1 |
+| Vendas e caixa | VENDA, ITEM_VENDA, PAGAMENTO_VENDA, FORMA_PAGAMENTO, CAIXA, SESSAO_CAIXA, MOVIMENTACAO_CAIXA | P3, P5 |
+| Financeiro e fiado | CLIENTE, ABATIMENTO_FIADO, CONTA_PAGAR | P6, P7 |
+| Pessoas e acesso | FUNCIONARIO, PERMISSAO | Transversal (P1 a P8) |
 
 ### 11.3 Substantivos analisados que NÃO viraram entidade
 
@@ -579,13 +580,13 @@ As entidades foram obtidas a partir dos substantivos relevantes dos requisitos e
 | Venda "por peso" | Atributo de PRODUTO | É uma característica do produto, não um tipo distinto de venda: o fluxo de caixa é idêntico, muda apenas a origem da quantidade (balança). |
 | Inventário | Tipo de MOVIMENTACAO_ESTOQUE | A conferência física existe (é feita antes dos pedidos), mas o que precisa ser guardado é o ajuste resultante, com motivo e responsável. Uma entidade de contagem completa seria estrutura sem uso atual. |
 
-> **Princípio adotado:** uma entidade só foi criada quando (a) possui identidade própria, (b) possui atributos que não pertencem a nenhuma outra entidade e (c) alguém no mercado precisa consultá-la ou decidir com base nela. Quando um dos três critérios falhava, o conceito virou atributo, domínio de valores ou tipo de outra entidade.
+> **Critério adotado:** uma entidade só foi criada quando (a) tem identidade própria, (b) tem atributos que não pertencem a outra entidade e (c) alguém no mercado precisa consultá-la ou decidir com base nela. Quando faltava um dos três, o conceito virou atributo, domínio de valores ou tipo de outra entidade.
 
 ---
 
 ## 12. Atributos
 
-Nesta etapa o foco é **identificar, descrever e organizar** os dados; tipos físicos e tamanhos serão definidos no modelo lógico e físico. A classificação abaixo é a usada no dicionário de dados (seção 15) e na notação do DER.
+Nesta etapa os dados são identificados, descritos e organizados. Tipos físicos e tamanhos ficam para os modelos lógico e físico. A classificação abaixo é a mesma do dicionário de dados (seção 15) e da notação do DER.
 
 | Classificação | Notação no DER | Definição e exemplos neste modelo |
 | --- | --- | --- |
@@ -602,9 +603,9 @@ Nesta etapa o foco é **identificar, descrever e organizar** os dados; tipos fí
 
 | Atributo | Decisão e justificativa |
 | --- | --- |
-| ITEM_VENDA.preco_unitario_praticado | É uma **cópia** do preço vigente no momento da venda, e não uma consulta à embalagem. Se o preço mudar amanhã, a venda de ontem não pode mudar (RN-22). Esse é o tipo de decisão que diferencia um modelo que apenas organiza de um modelo que preserva a verdade histórica. |
+| ITEM_VENDA.preco_unitario_praticado | Guarda uma cópia do preço vigente no momento da venda, em vez de consultar a embalagem. Se o preço mudar amanhã, a venda de ontem continua com o valor que foi cobrado (RN-22). |
 | ITEM_VENDA.custo_unitario_referencia | Guarda o custo do lote baixado. Sem ele, o lucro do dia, pedido pelo gerente, seria impossível de calcular depois, porque o custo muda a cada compra (PB-05, PB-17). |
-| LOTE.quantidade_atual | Derivado das movimentações. Poderia ser mantido como valor materializado por desempenho no modelo físico, mas conceitualmente é consequência das movimentações; é isso que garante a rastreabilidade exigida pelo RNF-05. |
+| LOTE.quantidade_atual | Derivado das movimentações. Poderia ser mantido como valor materializado por desempenho no modelo físico, mas conceitualmente ele é calculado a partir das movimentações, o que garante a rastreabilidade exigida pelo RNF-05. |
 | CLIENTE.saldo_devedor | Derivado: soma dos fiados menos soma dos abatimentos. Não é digitado, justamente para eliminar o erro do caderno, em que o saldo é reescrito manualmente. |
 | PAGAMENTO_VENDA.data_prevista_credito | Derivado da data da venda mais o prazo da forma de pagamento. É o atributo que viabiliza a previsão de caixa (RF-35) e o alerta prioritário do gerente (RF-36). |
 | EMBALAGEM.fator_conversao | Converte a forma de venda para a unidade base do produto (fardo de 12 = 12 unidades). Sem ele, vender um fardo baixaria "1" do estoque e o saldo ficaria errado, problema clássico em supermercados. |
@@ -614,7 +615,7 @@ Nesta etapa o foco é **identificar, descrever e organizar** os dados; tipos fí
 
 ### 12.2 Quadro de chaves primárias e estrangeiras
 
-O quadro resume a identificação de cada entidade. Todas as chaves primárias são **naturais** (formadas por dados do negócio) e cada chave estrangeira indica a entidade referenciada. Quando a PK é composta, todos os atributos listados juntos formam a chave. A justificativa das escolhas está na decisão D-13 (seção 17.1).
+O quadro mostra como cada entidade é identificada. Todas as chaves primárias são naturais, formadas por dados do negócio, e cada chave estrangeira indica a entidade que referencia. Quando a PK é composta, os atributos listados juntos formam a chave. A decisão D-13 (seção 17.1) explica essas escolhas.
 
 | Entidade | Chave primária (PK) | Chaves estrangeiras (FK) → entidade referenciada |
 | --- | --- | --- |
@@ -644,9 +645,9 @@ O quadro resume a identificação de cada entidade. Todas as chaves primárias s
 
 ## 13. Relacionamentos
 
-Os relacionamentos foram obtidos a partir dos **verbos** presentes nos requisitos e nas regras de negócio, como orienta o manual: "o cliente realiza uma venda", "o funcionário confere o recebimento", "o lote sofre movimentação". Cada um dos 36 relacionamentos abaixo representa uma interação que existe no mercado; nenhum foi criado para "ligar caixinhas".
+Os relacionamentos saíram dos verbos dos requisitos e das regras de negócio, como pede o manual: "o cliente realiza uma venda", "o funcionário confere o recebimento", "o lote sofre movimentação". Cada um dos 36 relacionamentos abaixo corresponde a algo que acontece no mercado.
 
-Leitura da tabela, na convenção do manual: **A (min,max) - verbo - B (min,max)**, em que o par ao lado de A indica com quantas ocorrências de B uma ocorrência de A pode se relacionar.
+Leitura da tabela, na convenção do manual: A (min,max) - verbo - B (min,max). O par ao lado de A indica com quantas ocorrências de B uma ocorrência de A pode se relacionar.
 
 | ID | Relacionamento | Atributos do relacionamento | Justificativa (regra ou fato da entrevista) |
 | --- | --- | --- | --- |
@@ -654,10 +655,10 @@ Leitura da tabela, na convenção do manual: **A (min,max) - verbo - B (min,max)
 | R02 | PRODUTO (1,N) - **é vendido em** - EMBALAGEM (1,1) | | Um produto só é vendável se tiver ao menos uma forma de venda (unidade, fardo, quilo); cada embalagem é de um único produto (RN-03). |
 | R03 | EMBALAGEM (0,N) - **registra** - HISTORICO_PRECO (1,1) | | Cada alteração de preço refere-se a uma embalagem; embalagem nova ainda sem alterações (RN-06). |
 | R04 | FUNCIONARIO (0,N) - **altera** - HISTORICO_PRECO (1,1) | | Toda alteração de preço tem um responsável identificado (RN-07; entrevista 7.10). |
-| R05 | FORNECEDOR (0,N) - **FORNECE** - PRODUTO (0,N) **N:N** | PK/FK: cnpj_fornecedor + nome_produto; preco_ultima_compra, data_ultima_compra, codigo_no_fornecedor | N:N: um produto pode ser comprado de vários fornecedores e um fornecedor vende vários produtos, com preços diferentes (entrevista 2.9 e 3.10). O preço pertence ao PAR fornecedor-produto. |
+| R05 | FORNECEDOR (0,N) - **FORNECE** - PRODUTO (0,N) N:N | PK/FK: cnpj_fornecedor + nome_produto; preco_ultima_compra, data_ultima_compra, codigo_no_fornecedor | N:N: um produto pode ser comprado de vários fornecedores e um fornecedor vende vários produtos, com preços diferentes (entrevista 2.9 e 3.10). O preço pertence ao PAR fornecedor-produto. |
 | R06 | FORNECEDOR (0,N) - **atende** - PEDIDO_COMPRA (1,1) | | Todo pedido é feito a um único fornecedor (RN-10). |
 | R07 | FUNCIONARIO (0,N) - **emite** - PEDIDO_COMPRA (1,1) | | Pedidos são feitos por funcionários específicos (entrevista 3.2). |
-| R08 | PEDIDO_COMPRA (1,N) - **SOLICITA** - PRODUTO (0,N) **N:N** | PK/FK: cnpj_fornecedor + data_hora_pedido + nome_produto; quantidade_pedida, preco_negociado | N:N: um pedido tem ao menos um produto e um produto aparece em vários pedidos. Quantidade e preço negociado descrevem o item do pedido, não o pedido nem o produto. |
+| R08 | PEDIDO_COMPRA (1,N) - **SOLICITA** - PRODUTO (0,N) N:N | PK/FK: cnpj_fornecedor + data_hora_pedido + nome_produto; quantidade_pedida, preco_negociado | N:N: um pedido tem ao menos um produto e um produto aparece em vários pedidos. Quantidade e preço negociado descrevem o item do pedido, não o pedido nem o produto. |
 | R09 | PEDIDO_COMPRA (0,N) - **é atendido por** - RECEBIMENTO (0,1) | | Um pedido pode chegar em várias entregas (faltantes chegam depois, entrevista 3.16) ou nenhuma (cancelado). Um recebimento pode existir sem pedido registrado (vendedor que passa e entrega na hora). |
 | R10 | FORNECEDOR (0,N) - **entrega** - RECEBIMENTO (1,1) | | Todo recebimento tem um fornecedor, mesmo sem pedido prévio (RN-12). |
 | R11 | FUNCIONARIO (0,N) - **confere** - RECEBIMENTO (1,1) | | Quem estiver disponível confere (entrevista 3.15); o sistema precisa saber quem foi. |
@@ -685,58 +686,58 @@ Leitura da tabela, na convenção do manual: **A (min,max) - verbo - B (min,max)
 | R33 | FORMA_PAGAMENTO (0,N) - **é usada em** - ABATIMENTO_FIADO (1,1) | | Cliente pode quitar fiado em dinheiro ou Pix; a forma FIADO não pode ser usada aqui (RN-27). |
 | R34 | FUNCIONARIO (0,N) - **recebe** - ABATIMENTO_FIADO (1,1) | | Quem recebeu o pagamento fica registrado. |
 | R35 | SESSAO_CAIXA (0,N) - **contabiliza** - ABATIMENTO_FIADO (0,1) | | Abatimento em dinheiro recebido no caixa precisa entrar na conferência da gaveta. |
-| R36 | FUNCIONARIO (0,N) - **POSSUI** - PERMISSAO (0,N) **N:N** | PK/FK: cpf_funcionario + codigo_permissao; data_concessao | N:N: as funções se sobrepõem (entrevista 7.4). Controle por permissão individual, não por cargo fixo. |
+| R36 | FUNCIONARIO (0,N) - **POSSUI** - PERMISSAO (0,N) N:N | PK/FK: cpf_funcionario + codigo_permissao; data_concessao | N:N: as funções se sobrepõem (entrevista 7.4). Controle por permissão individual, não por cargo fixo. |
 
 ---
 
 ## 14. Cardinalidades
 
-A regra de ouro do manual foi aplicada sem exceção: **nenhuma cardinalidade foi definida olhando apenas um lado**. Para cada relacionamento foram feitas as duas perguntas, "vá" e "volte", e a resposta de cada uma está registrada abaixo, junto da regra de negócio que a sustenta. Onde a resposta foi "várias" nos dois sentidos, o relacionamento foi tratado como N:N (seção 14.2).
+Seguimos a regra do manual para todas as cardinalidades: nenhuma foi definida olhando um lado só. Para cada relacionamento fizemos as duas perguntas, de ida e de volta, e a tabela registra as respostas junto com a regra de negócio que as sustenta. Onde a resposta foi "várias" nos dois sentidos, o relacionamento foi tratado como N:N (seção 14.2).
 
-Leitura das respostas: **(0,N)** no mínimo nenhuma, no máximo várias · **(1,N)** no mínimo uma, no máximo várias · **(1,1)** exatamente uma · **(0,1)** no mínimo nenhuma, no máximo uma.
+Leitura das respostas: (0,N) no mínimo nenhuma, no máximo várias · (1,N) no mínimo uma, no máximo várias · (1,1) exatamente uma · (0,1) no mínimo nenhuma, no máximo uma.
 
 | ID | Pergunta de ida | Resp. | Pergunta de volta | Resp. | Regra |
 | --- | --- | --- | --- | --- | --- |
-| R01 | Uma CATEGORIA classifica quantos PRODUTOS? | **(0,N)** | Um PRODUTO está ligado a quantas CATEGORIAS? | **(1,1)** | RN-01 |
-| R02 | Um PRODUTO é vendido em quantas EMBALAGENS? | **(1,N)** | Uma EMBALAGEM está ligada a quantos PRODUTOS? | **(1,1)** | RN-03 |
-| R03 | Uma EMBALAGEM registra quantos HISTORICO_PRECO? | **(0,N)** | Um HISTORICO_PRECO está ligado a quantas EMBALAGENS? | **(1,1)** | RN-06 |
-| R04 | Um FUNCIONARIO altera quantos HISTORICO_PRECO? | **(0,N)** | Um HISTORICO_PRECO está ligado a quantos FUNCIONARIOS? | **(1,1)** | RN-07 |
-| R05 | Um FORNECEDOR fornece quantos PRODUTOS? | **(0,N)** | Um PRODUTO está ligado a quantos FORNECEDORES? | **(0,N)** | RN-09 |
-| R06 | Um FORNECEDOR atende quantos PEDIDO_COMPRA? | **(0,N)** | Um PEDIDO_COMPRA está ligado a quantos FORNECEDORES? | **(1,1)** | RN-10 |
-| R07 | Um FUNCIONARIO emite quantos PEDIDO_COMPRA? | **(0,N)** | Um PEDIDO_COMPRA está ligado a quantos FUNCIONARIOS? | **(1,1)** | PO-01 |
-| R08 | Um PEDIDO_COMPRA solicita quantos PRODUTOS? | **(1,N)** | Um PRODUTO está ligado a quantos PEDIDO_COMPRA? | **(0,N)** | RN-10 |
-| R09 | Um PEDIDO_COMPRA é atendido por quantos RECEBIMENTOS? | **(0,N)** | Um RECEBIMENTO está ligado a quantos PEDIDO_COMPRA? | **(0,1)** | RN-11 |
-| R10 | Um FORNECEDOR entrega quantos RECEBIMENTOS? | **(0,N)** | Um RECEBIMENTO está ligado a quantos FORNECEDORES? | **(1,1)** | RN-12 |
-| R11 | Um FUNCIONARIO confere quantos RECEBIMENTOS? | **(0,N)** | Um RECEBIMENTO está ligado a quantos FUNCIONARIOS? | **(1,1)** | PO-05 |
-| R12 | Um RECEBIMENTO origina quantos LOTES? | **(0,N)** | Um LOTE está ligado a quantos RECEBIMENTOS? | **(1,1)** | RN-14 |
-| R13 | Um PRODUTO possui quantos LOTES? | **(0,N)** | Um LOTE está ligado a quantos PRODUTOS? | **(1,1)** | RN-16 |
-| R14 | Um LOTE sofre quantas MOVIMENTACAO_ESTOQUE? | **(1,N)** | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos LOTES? | **(1,1)** | RN-16 |
-| R15 | Um FUNCIONARIO registra quantas MOVIMENTACAO_ESTOQUE? | **(0,N)** | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos FUNCIONARIOS? | **(0,1)** | RN-18 |
-| R16 | Um ITEM_VENDA gera quantas MOVIMENTACAO_ESTOQUE? | **(0,N)** | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos ITEM_VENDA? | **(0,1)** | RN-17 |
-| R17 | Um RECEBIMENTO gera quantas CONTA_PAGAR? | **(0,N)** | Uma CONTA_PAGAR está ligada a quantos RECEBIMENTOS? | **(0,1)** | RN-31 |
-| R18 | Um FUNCIONARIO quita quantas CONTA_PAGAR? | **(0,N)** | Uma CONTA_PAGAR está ligada a quantos FUNCIONARIOS? | **(0,1)** | RN-35 |
-| R19 | Um CAIXA possui quantas SESSAO_CAIXA? | **(0,N)** | Uma SESSAO_CAIXA está ligada a quantos CAIXAS? | **(1,1)** | RN-30 |
-| R20 | Um FUNCIONARIO abre quantas SESSAO_CAIXA? | **(0,N)** | Uma SESSAO_CAIXA está ligada a quantos FUNCIONARIOS (abertura)? | **(1,1)** | PO-11 |
-| R21 | Um FUNCIONARIO fecha quantas SESSAO_CAIXA? | **(0,N)** | Uma SESSAO_CAIXA está ligada a quantos FUNCIONARIOS (fechamento)? | **(0,1)** | RN-30 |
-| R22 | Uma SESSAO_CAIXA registra quantas VENDAS? | **(0,N)** | Uma VENDA está ligada a quantas SESSAO_CAIXA? | **(1,1)** | RN-20 |
-| R23 | Um FUNCIONARIO opera quantas VENDAS? | **(0,N)** | Uma VENDA está ligada a quantos FUNCIONARIOS? | **(1,1)** | RN-35 |
-| R24 | Um CLIENTE realiza quantas VENDAS? | **(0,N)** | Uma VENDA está ligada a quantos CLIENTES? | **(0,1)** | RN-24 |
-| R25 | Uma VENDA contém quantos ITEM_VENDA? | **(1,N)** | Um ITEM_VENDA está ligado a quantas VENDAS? | **(1,1)** | RN-21 |
-| R26 | Uma EMBALAGEM é vendida em quantos ITEM_VENDA? | **(0,N)** | Um ITEM_VENDA está ligado a quantas EMBALAGENS? | **(1,1)** | RN-03 |
-| R27 | Um FUNCIONARIO autoriza desconto em quantos ITEM_VENDA? | **(0,N)** | Um ITEM_VENDA está ligado a quantos FUNCIONARIOS (autorizador)? | **(0,1)** | RN-23 |
-| R28 | Uma VENDA é paga por quantos PAGAMENTO_VENDA? | **(1,N)** | Um PAGAMENTO_VENDA está ligado a quantas VENDAS? | **(1,1)** | RN-21 |
-| R29 | Uma FORMA_PAGAMENTO é usada em quantos PAGAMENTO_VENDA? | **(0,N)** | Um PAGAMENTO_VENDA está ligado a quantas FORMA_PAGAMENTO? | **(1,1)** | RN-33 |
-| R30 | Uma SESSAO_CAIXA registra quantas MOVIMENTACAO_CAIXA? | **(0,N)** | Uma MOVIMENTACAO_CAIXA está ligada a quantas SESSAO_CAIXA? | **(1,1)** | RN-29 |
-| R31 | Um FUNCIONARIO executa quantas MOVIMENTACAO_CAIXA? | **(0,N)** | Uma MOVIMENTACAO_CAIXA está ligada a quantos FUNCIONARIOS? | **(1,1)** | RN-29 |
-| R32 | Um CLIENTE paga quantos ABATIMENTO_FIADO? | **(0,N)** | Um ABATIMENTO_FIADO está ligado a quantos CLIENTES? | **(1,1)** | RN-27 |
-| R33 | Uma FORMA_PAGAMENTO é usada em quantos ABATIMENTO_FIADO? | **(0,N)** | Um ABATIMENTO_FIADO está ligado a quantas FORMA_PAGAMENTO? | **(1,1)** | RN-27 |
-| R34 | Um FUNCIONARIO recebe quantos ABATIMENTO_FIADO? | **(0,N)** | Um ABATIMENTO_FIADO está ligado a quantos FUNCIONARIOS? | **(1,1)** | RN-35 |
-| R35 | Uma SESSAO_CAIXA contabiliza quantos ABATIMENTO_FIADO? | **(0,N)** | Um ABATIMENTO_FIADO está ligado a quantas SESSAO_CAIXA? | **(0,1)** | RN-30 |
-| R36 | Um FUNCIONARIO possui quantas PERMISSOES? | **(0,N)** | Uma PERMISSAO está ligada a quantos FUNCIONARIOS? | **(0,N)** | RN-35 |
+| R01 | Uma CATEGORIA classifica quantos PRODUTOS? | (0,N) | Um PRODUTO está ligado a quantas CATEGORIAS? | (1,1) | RN-01 |
+| R02 | Um PRODUTO é vendido em quantas EMBALAGENS? | (1,N) | Uma EMBALAGEM está ligada a quantos PRODUTOS? | (1,1) | RN-03 |
+| R03 | Uma EMBALAGEM registra quantos HISTORICO_PRECO? | (0,N) | Um HISTORICO_PRECO está ligado a quantas EMBALAGENS? | (1,1) | RN-06 |
+| R04 | Um FUNCIONARIO altera quantos HISTORICO_PRECO? | (0,N) | Um HISTORICO_PRECO está ligado a quantos FUNCIONARIOS? | (1,1) | RN-07 |
+| R05 | Um FORNECEDOR fornece quantos PRODUTOS? | (0,N) | Um PRODUTO está ligado a quantos FORNECEDORES? | (0,N) | RN-09 |
+| R06 | Um FORNECEDOR atende quantos PEDIDO_COMPRA? | (0,N) | Um PEDIDO_COMPRA está ligado a quantos FORNECEDORES? | (1,1) | RN-10 |
+| R07 | Um FUNCIONARIO emite quantos PEDIDO_COMPRA? | (0,N) | Um PEDIDO_COMPRA está ligado a quantos FUNCIONARIOS? | (1,1) | PO-01 |
+| R08 | Um PEDIDO_COMPRA solicita quantos PRODUTOS? | (1,N) | Um PRODUTO está ligado a quantos PEDIDO_COMPRA? | (0,N) | RN-10 |
+| R09 | Um PEDIDO_COMPRA é atendido por quantos RECEBIMENTOS? | (0,N) | Um RECEBIMENTO está ligado a quantos PEDIDO_COMPRA? | (0,1) | RN-11 |
+| R10 | Um FORNECEDOR entrega quantos RECEBIMENTOS? | (0,N) | Um RECEBIMENTO está ligado a quantos FORNECEDORES? | (1,1) | RN-12 |
+| R11 | Um FUNCIONARIO confere quantos RECEBIMENTOS? | (0,N) | Um RECEBIMENTO está ligado a quantos FUNCIONARIOS? | (1,1) | PO-05 |
+| R12 | Um RECEBIMENTO origina quantos LOTES? | (0,N) | Um LOTE está ligado a quantos RECEBIMENTOS? | (1,1) | RN-14 |
+| R13 | Um PRODUTO possui quantos LOTES? | (0,N) | Um LOTE está ligado a quantos PRODUTOS? | (1,1) | RN-16 |
+| R14 | Um LOTE sofre quantas MOVIMENTACAO_ESTOQUE? | (1,N) | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos LOTES? | (1,1) | RN-16 |
+| R15 | Um FUNCIONARIO registra quantas MOVIMENTACAO_ESTOQUE? | (0,N) | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos FUNCIONARIOS? | (0,1) | RN-18 |
+| R16 | Um ITEM_VENDA gera quantas MOVIMENTACAO_ESTOQUE? | (0,N) | Uma MOVIMENTACAO_ESTOQUE está ligada a quantos ITEM_VENDA? | (0,1) | RN-17 |
+| R17 | Um RECEBIMENTO gera quantas CONTA_PAGAR? | (0,N) | Uma CONTA_PAGAR está ligada a quantos RECEBIMENTOS? | (0,1) | RN-31 |
+| R18 | Um FUNCIONARIO quita quantas CONTA_PAGAR? | (0,N) | Uma CONTA_PAGAR está ligada a quantos FUNCIONARIOS? | (0,1) | RN-35 |
+| R19 | Um CAIXA possui quantas SESSAO_CAIXA? | (0,N) | Uma SESSAO_CAIXA está ligada a quantos CAIXAS? | (1,1) | RN-30 |
+| R20 | Um FUNCIONARIO abre quantas SESSAO_CAIXA? | (0,N) | Uma SESSAO_CAIXA está ligada a quantos FUNCIONARIOS (abertura)? | (1,1) | PO-11 |
+| R21 | Um FUNCIONARIO fecha quantas SESSAO_CAIXA? | (0,N) | Uma SESSAO_CAIXA está ligada a quantos FUNCIONARIOS (fechamento)? | (0,1) | RN-30 |
+| R22 | Uma SESSAO_CAIXA registra quantas VENDAS? | (0,N) | Uma VENDA está ligada a quantas SESSAO_CAIXA? | (1,1) | RN-20 |
+| R23 | Um FUNCIONARIO opera quantas VENDAS? | (0,N) | Uma VENDA está ligada a quantos FUNCIONARIOS? | (1,1) | RN-35 |
+| R24 | Um CLIENTE realiza quantas VENDAS? | (0,N) | Uma VENDA está ligada a quantos CLIENTES? | (0,1) | RN-24 |
+| R25 | Uma VENDA contém quantos ITEM_VENDA? | (1,N) | Um ITEM_VENDA está ligado a quantas VENDAS? | (1,1) | RN-21 |
+| R26 | Uma EMBALAGEM é vendida em quantos ITEM_VENDA? | (0,N) | Um ITEM_VENDA está ligado a quantas EMBALAGENS? | (1,1) | RN-03 |
+| R27 | Um FUNCIONARIO autoriza desconto em quantos ITEM_VENDA? | (0,N) | Um ITEM_VENDA está ligado a quantos FUNCIONARIOS (autorizador)? | (0,1) | RN-23 |
+| R28 | Uma VENDA é paga por quantos PAGAMENTO_VENDA? | (1,N) | Um PAGAMENTO_VENDA está ligado a quantas VENDAS? | (1,1) | RN-21 |
+| R29 | Uma FORMA_PAGAMENTO é usada em quantos PAGAMENTO_VENDA? | (0,N) | Um PAGAMENTO_VENDA está ligado a quantas FORMA_PAGAMENTO? | (1,1) | RN-33 |
+| R30 | Uma SESSAO_CAIXA registra quantas MOVIMENTACAO_CAIXA? | (0,N) | Uma MOVIMENTACAO_CAIXA está ligada a quantas SESSAO_CAIXA? | (1,1) | RN-29 |
+| R31 | Um FUNCIONARIO executa quantas MOVIMENTACAO_CAIXA? | (0,N) | Uma MOVIMENTACAO_CAIXA está ligada a quantos FUNCIONARIOS? | (1,1) | RN-29 |
+| R32 | Um CLIENTE paga quantos ABATIMENTO_FIADO? | (0,N) | Um ABATIMENTO_FIADO está ligado a quantos CLIENTES? | (1,1) | RN-27 |
+| R33 | Uma FORMA_PAGAMENTO é usada em quantos ABATIMENTO_FIADO? | (0,N) | Um ABATIMENTO_FIADO está ligado a quantas FORMA_PAGAMENTO? | (1,1) | RN-27 |
+| R34 | Um FUNCIONARIO recebe quantos ABATIMENTO_FIADO? | (0,N) | Um ABATIMENTO_FIADO está ligado a quantos FUNCIONARIOS? | (1,1) | RN-35 |
+| R35 | Uma SESSAO_CAIXA contabiliza quantos ABATIMENTO_FIADO? | (0,N) | Um ABATIMENTO_FIADO está ligado a quantas SESSAO_CAIXA? | (0,1) | RN-30 |
+| R36 | Um FUNCIONARIO possui quantas PERMISSOES? | (0,N) | Uma PERMISSAO está ligada a quantos FUNCIONARIOS? | (0,N) | RN-35 |
 
 ### 14.1 Cardinalidades mínimas: por que 0 e por que 1
 
-A cardinalidade mínima é a parte mais negligenciada da modelagem e a que mais revela compreensão do negócio. Os casos abaixo foram decididos por regra, e não por aparência.
+A cardinalidade mínima é onde aparecem os detalhes do negócio. Cada caso abaixo foi decidido com base numa regra.
 
 | Situação | Decisão | Por quê |
 | --- | --- | --- |
@@ -752,19 +753,19 @@ A cardinalidade mínima é a parte mais negligenciada da modelagem e a que mais 
 
 ### 14.2 Relacionamentos N:N verificados
 
-Aplicando o teste do manual ("uma ocorrência de A pode se relacionar a várias de B? E uma de B a várias de A?"), três relacionamentos resultaram N:N. Nenhum deles é erro: todos representam situações reais do mercado.
+Com o teste do manual ("uma ocorrência de A pode se relacionar a várias de B? E uma de B a várias de A?"), três relacionamentos deram N:N. Todos representam situações reais do mercado.
 
 | Relacionamento | Verificação nos dois sentidos | Atributos próprios | Tratamento |
 | --- | --- | --- | --- |
-| R05 FORNECEDOR, FORNECE, PRODUTO | Um fornecedor vende vários produtos. Um produto é comprado de vários fornecedores ("o preço varia de vendedor para vendedor"). **Sim nos dois lados.** | preco_ultima_compra, data_ultima_compra, codigo_no_fornecedor | Mantido N:N. Identificado pela PK composta (cnpj_fornecedor, nome_produto), ambas FK |
-| R08 PEDIDO_COMPRA, SOLICITA, PRODUTO | Um pedido solicita vários produtos. Um produto aparece em vários pedidos ao longo do tempo. **Sim nos dois lados.** | quantidade_pedida, preco_negociado | Mantido N:N. PK composta (cnpj_fornecedor, data_hora_pedido, nome_produto), todas FK |
-| R36 FUNCIONARIO, POSSUI, PERMISSAO | Um funcionário tem várias permissões. Uma permissão é concedida a vários funcionários. **Sim nos dois lados.** | data_concessao | Mantido N:N. PK composta (cpf_funcionario, codigo_permissao), ambas FK |
+| R05 FORNECEDOR, FORNECE, PRODUTO | Um fornecedor vende vários produtos. Um produto é comprado de vários fornecedores ("o preço varia de vendedor para vendedor"). Sim nos dois lados. | preco_ultima_compra, data_ultima_compra, codigo_no_fornecedor | Mantido N:N. Identificado pela PK composta (cnpj_fornecedor, nome_produto), ambas FK |
+| R08 PEDIDO_COMPRA, SOLICITA, PRODUTO | Um pedido solicita vários produtos. Um produto aparece em vários pedidos ao longo do tempo. Sim nos dois lados. | quantidade_pedida, preco_negociado | Mantido N:N. PK composta (cnpj_fornecedor, data_hora_pedido, nome_produto), todas FK |
+| R36 FUNCIONARIO, POSSUI, PERMISSAO | Um funcionário tem várias permissões. Uma permissão é concedida a vários funcionários. Sim nos dois lados. | data_concessao | Mantido N:N. PK composta (cpf_funcionario, codigo_permissao), ambas FK |
 
-> **Caso especial: VENDA x EMBALAGEM.** Esse relacionamento também seria N:N, mas foi **resolvido já no conceitual** pela entidade associativa ITEM_VENDA. O motivo é decisivo: o item de venda não guarda apenas quantidade; ele guarda preço praticado, desconto e custo de referência, e ainda **gera movimentações de estoque** (R16), podendo baixar mais de um lote pelo critério FEFO. Um relacionamento simples não poderia se relacionar com outra entidade; uma entidade associativa pode. O mesmo raciocínio se aplica a PAGAMENTO_VENDA (VENDA x FORMA_PAGAMENTO), que precisa de valor, situação de crédito e data prevista próprios.
+> **Caso especial: VENDA x EMBALAGEM.** Esse relacionamento também seria N:N, mas já foi resolvido no conceitual com a entidade associativa ITEM_VENDA. O item de venda guarda quantidade, preço praticado, desconto e custo de referência, e também gera movimentações de estoque (R16), podendo baixar mais de um lote pelo critério FEFO. Um relacionamento não pode se relacionar com outra entidade; uma entidade associativa pode. O mesmo vale para PAGAMENTO_VENDA (VENDA x FORMA_PAGAMENTO), que precisa de valor, situação de crédito e data prevista próprios.
 
 ### 14.3 Relacionamentos com atributos próprios
 
-Pergunta do manual: "o relacionamento possui alguma informação própria?". A resposta foi sim em quatro situações, e em cada uma o atributo **não pertence a nenhuma das duas entidades isoladas**:
+Pergunta do manual: "o relacionamento possui alguma informação própria?". A resposta foi sim em quatro casos. Em todos, o atributo não pertence a nenhuma das duas entidades sozinha:
 
 | Relacionamento | Atributo | Por que não pertence às entidades |
 | --- | --- | --- |
@@ -777,7 +778,7 @@ Pergunta do manual: "o relacionamento possui alguma informação própria?". A r
 
 ## 15. Dicionário de dados conceitual
 
-O dicionário permite que outra pessoa entenda, para cada dado: **que dado é esse, para que serve, a que entidade pertence e qual regra está associada a ele**. A coluna "classificação" segue a legenda da seção 12: PK (chave primária), FK (chave estrangeira), PK, FK (compõe a chave e referencia outra entidade), simples, composto, multivalorado e derivado; obrigatório ou opcional. Nenhuma entidade usa chave substituta (surrogate key). Ainda não há tipos físicos nem tamanhos; isso pertence às próximas entregas.
+O dicionário mostra, para cada dado, o que ele é, para que serve, a que entidade pertence e que regra se aplica a ele. A coluna "classificação" segue a legenda da seção 12: PK (chave primária), FK (chave estrangeira), PK, FK (compõe a chave e referencia outra entidade), simples, composto, multivalorado e derivado; obrigatório ou opcional. Nenhuma entidade usa chave substituta (surrogate key). Tipos físicos e tamanhos ficam para as próximas entregas.
 
 ### 15.1 Módulo: Produtos e Estoque
 
@@ -1135,7 +1136,7 @@ Relacionamentos N:N não possuem chave própria: são identificados pela combina
 
 ## 16. DER
 
-O DER só foi desenhado depois de concluídas as etapas anteriores. Ele é consequência da análise, e não seu ponto de partida. A notação adotada é a de **Peter Chen**, exigida no modelo conceitual: retângulos para entidades, losangos para relacionamentos e pares (mínimo, máximo) junto de cada entidade participante. Dentro de cada entidade são listados os atributos, com a chave primária (PK) no topo e as chaves estrangeiras (FK) identificadas.
+O DER foi desenhado depois das etapas anteriores, a partir delas. A notação é a de Peter Chen, exigida no modelo conceitual: retângulos para entidades, losangos para relacionamentos e pares (mínimo, máximo) para as cardinalidades. Dentro de cada entidade aparecem os atributos, com a chave primária (PK) no topo e as chaves estrangeiras (FK) identificadas.
 
 ### 16.1 Notação
 
@@ -1153,17 +1154,25 @@ O DER só foi desenhado depois de concluídas as etapas anteriores. Ele é conse
 
 ### 16.2 Visão geral do modelo
 
-A visão geral mostra as 21 entidades e os 36 relacionamentos com suas cardinalidades. Ela permite verificar de uma só vez a integração entre os módulos: repare que FUNCIONARIO atravessa todos eles (resposta ao PB-11) e que o par RECEBIMENTO → LOTE → MOVIMENTACAO_ESTOQUE é o eixo que sustenta estoque, validade e custo.
+A visão geral mostra as 21 entidades e os 36 relacionamentos com suas cardinalidades, e permite ver de uma vez como os módulos se ligam. FUNCIONARIO aparece em todos eles (PB-11), e a sequência RECEBIMENTO → LOTE → MOVIMENTACAO_ESTOQUE sustenta estoque, validade e custo.
 
 ![Figura 8: DER completo, visão geral](docs/der/figura-08-der-visao-geral.png)
 
 *Figura 8: DER completo em notação Chen (visão geral, sem atributos, para leitura da estrutura).*
 
-As versões ampliadas estão em [`docs/der/`](docs/der/): a visão geral em tamanho A3 ([Figura 14](docs/der/figura-14-der-visao-geral-a3.png)) e o DER completo com todos os atributos ([der-completo-atributos.png](docs/der/der-completo-atributos.png)).
+As versões ampliadas estão abaixo e na pasta [`docs/der/`](docs/der/). Clique na imagem para abrir em tamanho original.
+
+[![Figura 14: DER, visão geral em tamanho A3](docs/der/figura-14-der-visao-geral-a3.png)](docs/der/figura-14-der-visao-geral-a3.png)
+
+*Figura 14: DER, visão geral em tamanho A3 (21 entidades, 36 relacionamentos).*
+
+[![DER completo com todos os atributos](docs/der/der-completo-atributos.png)](docs/der/der-completo-atributos.png)
+
+*DER completo com todos os atributos e legenda da notação.*
 
 ### 16.3 DER por módulo: Produtos e Estoque
 
-Concentra a resposta às prioridades nº 1 e nº 3 do gerente. A cadeia PRODUTO → LOTE → MOVIMENTACAO_ESTOQUE é o que transforma "checagem manual" em informação: a validade fica no lote (porque é do lote, não do produto) e o saldo é consequência das movimentações (porque precisa ter origem verificável).
+Este módulo atende as prioridades nº 1 e nº 3 do gerente. Na sequência PRODUTO → LOTE → MOVIMENTACAO_ESTOQUE, a validade fica no lote, porque cada remessa tem a sua, e o saldo é calculado a partir das movimentações, para que cada quantidade tenha origem conhecida.
 
 ![Figura 9: módulo Produtos e Estoque](docs/der/figura-09-modulo-produtos-estoque.png)
 
@@ -1171,7 +1180,7 @@ Concentra a resposta às prioridades nº 1 e nº 3 do gerente. A cadeia PRODUTO 
 
 ### 16.4 DER por módulo: Compras e Fornecedores
 
-Aqui estão os dois relacionamentos que mais exigiram análise: R09 (um pedido pode ser atendido por várias entregas, e uma entrega pode não ter pedido) e R17 (uma entrega pode gerar nenhuma ou várias contas a pagar). Ambos foram definidos a partir de respostas literais da entrevista, e não por padrão de mercado.
+Os dois relacionamentos que mais exigiram análise estão aqui: R09 (um pedido pode ser atendido por várias entregas, e uma entrega pode não ter pedido) e R17 (uma entrega pode gerar nenhuma ou várias contas a pagar). As duas cardinalidades vieram de respostas da entrevista.
 
 ![Figura 10: módulo Compras e Fornecedores](docs/der/figura-10-modulo-compras-fornecedores.png)
 
@@ -1179,7 +1188,7 @@ Aqui estão os dois relacionamentos que mais exigiram análise: R09 (um pedido p
 
 ### 16.5 DER por módulo: Vendas e Caixa
 
-O módulo resolve simultaneamente o registro da venda (com identificação do operador), o pagamento em múltiplas formas e a conferência da gaveta. ITEM_VENDA aparece como entidade associativa porque precisa se relacionar com MOVIMENTACAO_ESTOQUE; um relacionamento comum não poderia fazê-lo.
+O módulo cobre o registro da venda com o operador identificado, o pagamento em mais de uma forma e a conferência da gaveta. ITEM_VENDA é entidade associativa porque precisa se relacionar com MOVIMENTACAO_ESTOQUE, e um relacionamento comum não poderia fazer isso.
 
 ![Figura 11: módulo Vendas e Caixa](docs/der/figura-11-modulo-vendas-caixa.png)
 
@@ -1187,7 +1196,7 @@ O módulo resolve simultaneamente o registro da venda (com identificação do op
 
 ### 16.6 DER por módulo: Financeiro e Fiado
 
-O fiado deixa de ser um caderno e passa a ser uma conta corrente: a dívida nasce da venda (R24) e é reduzida por abatimentos independentes (R32), permitindo pagamento parcial com histórico, exatamente a prática descrita na entrevista, que o caderno não consegue registrar.
+O fiado passa a funcionar como conta corrente: a dívida nasce da venda (R24) e diminui com abatimentos independentes (R32). Assim o cliente pode pagar aos poucos e cada pagamento fica registrado, como acontece hoje no mercado, só que sem o caderno.
 
 ![Figura 12: módulo Financeiro e Fiado](docs/der/figura-12-modulo-financeiro-fiado.png)
 
@@ -1195,7 +1204,7 @@ O fiado deixa de ser um caderno e passa a ser uma conta corrente: a dívida nasc
 
 ### 16.7 DER por módulo: Pessoas e Acesso
 
-O módulo transversal que responde "quem fez". O relacionamento N:N entre FUNCIONARIO e PERMISSAO foi escolhido em vez de um campo "cargo" porque, no mercado, as funções se sobrepõem: quem opera o caixa também altera preços, e quem fica na padaria também repõe gôndola.
+Este módulo atravessa todos os outros e registra quem fez cada operação. FUNCIONARIO e PERMISSAO ficaram em N:N, em vez de um campo "cargo", porque no mercado as funções se sobrepõem: quem opera o caixa também altera preço, e quem fica na padaria também repõe gôndola.
 
 ![Figura 13: módulo Pessoas e Acesso](docs/der/figura-13-modulo-pessoas-acesso.png)
 
@@ -1205,7 +1214,7 @@ O módulo transversal que responde "quem fez". O relacionamento N:N entre FUNCIO
 
 ## 17. Justificativas técnicas
 
-Esta seção responde à pergunta: **"de onde veio esta decisão?"**. Cada decisão é apresentada com o problema que a motivou, a alternativa descartada e a consequência prática, inclusive para o que o sistema poderá fazer no futuro. Em seguida vêm a matriz de rastreabilidade, a análise de evolução do modelo e as premissas adotadas.
+Esta seção explica de onde veio cada decisão: o problema que a motivou, a alternativa descartada e a consequência prática. Depois vêm a matriz de rastreabilidade, a análise de evolução do modelo e as premissas adotadas.
 
 ### 17.1 Decisões de modelagem
 
@@ -1214,14 +1223,14 @@ Esta seção responde à pergunta: **"de onde veio esta decisão?"**. Cada decis
 - **Decisão.** O produto é a unidade de estoque; a embalagem é a forma de venda, com código de barras, preço e fator de conversão próprios.
 - **Por quê.** O mercado vende o mesmo item em formatos distintos (lata e fardo de cerveja, pacote e unidade de papel higiênico, produtos por quilo). Se código de barras e preço ficassem em PRODUTO, ou se criaria um "produto" diferente para cada formato, quebrando o controle de estoque e a análise de giro, ou se perderia o preço por formato.
 - **Alternativa descartada.** Tratar cada formato como produto independente: simples de desenhar, mas impede responder "quanto de cerveja eu tenho?" e duplica cadastro, custo e validade.
-- **Consequência.** Vender um fardo baixa 12 unidades do estoque (fator de conversão), e o saldo permanece correto, evitando um problema clássico que derruba controles de estoque em supermercados.
+- **Consequência.** Vender um fardo baixa 12 unidades do estoque (fator de conversão), e o saldo continua certo.
 
 #### D-02. Criar LOTE em vez de guardar validade no produto
 
 - **Decisão.** Validade, custo unitário e quantidade recebida pertencem ao lote.
 - **Por quê.** Dois pacotes do mesmo arroz, comprados em datas diferentes, têm validades e custos diferentes. A prioridade nº 1 do gerente, a lista de validades, só é possível se a validade estiver na remessa, não no cadastro do produto.
 - **Alternativa descartada.** Campo "data_validade" em PRODUTO: só funcionaria se o mercado tivesse um único lote de cada item por vez, o que é falso.
-- **Consequência.** Permite FEFO na venda (RN-17), alerta por proximidade de vencimento (RF-17) e cálculo de perda por produto (RF-40). É a decisão de maior impacto financeiro do modelo.
+- **Consequência.** Permite FEFO na venda (RN-17), alerta de vencimento próximo (RF-17) e cálculo de perda por produto (RF-40). Das decisões do modelo, é a que mais afeta o resultado financeiro do mercado.
 
 #### D-03. Todo saldo nasce de MOVIMENTACAO_ESTOQUE
 
@@ -1233,7 +1242,7 @@ Esta seção responde à pergunta: **"de onde veio esta decisão?"**. Cada decis
 #### D-04. Tipos de movimentação como domínio, e não como sete entidades
 
 - **Decisão.** Entrada por recebimento, saída por venda, devolução, perda por vencimento, perda por avaria, troca com fornecedor e ajuste de inventário são valores do atributo tipo.
-- **Por quê.** Todas compartilham exatamente a mesma estrutura (lote, quantidade, data, motivo, responsável). Criar uma entidade para cada uma multiplicaria relacionamentos sem acrescentar informação, erro apontado pelo manual como "colocar tudo como entidade".
+- **Por quê.** Todas têm a mesma estrutura (lote, quantidade, data, motivo, responsável). Uma entidade para cada tipo multiplicaria os relacionamentos sem acrescentar informação, erro que o manual chama de "colocar tudo como entidade".
 - **Consequência.** Consultas de estoque percorrem uma única estrutura, e novos tipos de movimentação (por exemplo, consumo interno) podem ser incluídos sem alterar o modelo.
 
 #### D-05. ITEM_VENDA como entidade associativa, com preço e custo congelados
@@ -1246,19 +1255,19 @@ Esta seção responde à pergunta: **"de onde veio esta decisão?"**. Cada decis
 
 - **Decisão.** O pagamento é uma entidade associativa entre VENDA e FORMA_PAGAMENTO, com valor, troco, situação de crédito e data prevista.
 - **Por quê.** Uma venda pode ser paga em mais de uma forma, e cada forma tem prazo e taxa distintos. Um campo "forma_pagamento" em VENDA impediria o pagamento dividido e, principalmente, impediria prever quando o dinheiro estará disponível.
-- **Consequência.** Viabiliza a separação do faturamento por forma (PB-10), a previsão de caixa (RF-35) e o alerta de insuficiência (RF-36), a funcionalidade que o gerente classificou como "sim, muito" desejada.
+- **Consequência.** Permite separar o faturamento por forma de pagamento (PB-10), prever o caixa (RF-35) e emitir o alerta de insuficiência (RF-36), que o gerente disse querer "sim, muito".
 
 #### D-07. Vincular a venda à SESSAO_CAIXA e ao FUNCIONARIO
 
 - **Decisão.** Toda venda pertence a uma sessão de caixa aberta e registra o funcionário que a operou, mesmo a sessão já registrando quem abriu.
-- **Por quê.** Na prática do mercado, um funcionário cobre o almoço de outro no mesmo caixa. Se a autoria ficasse apenas na sessão, as vendas do período de cobertura seriam atribuídas à pessoa errada, exatamente a "confusão sobre alterações indevidas" que o gerente quer evitar.
+- **Por quê.** No mercado, um funcionário cobre o almoço de outro no mesmo caixa. Se a autoria ficasse só na sessão, as vendas feitas na cobertura iriam para a pessoa errada, e é esse tipo de confusão sobre alterações indevidas que o gerente quer evitar.
 - **Consequência.** Permite responder "quem fez esta venda?" (PB-11) e conferir o caixa por sessão, comparando o valor esperado com o contado.
 
 #### D-08. ABATIMENTO_FIADO ligado ao CLIENTE, e não à VENDA
 
 - **Decisão.** O pagamento do fiado reduz o saldo devedor do cliente, sem quitar uma venda específica.
-- **Por quê.** É assim que o mercado opera: o cliente paga "o que dá", e o caderno registra o nome, não a compra. Amarrar o abatimento a uma venda obrigaria o operador a escolher qual compra está sendo paga, decisão que ninguém toma hoje e que geraria dado falso.
-- **Alternativa descartada.** Modelar contas a receber por venda: mais "correto" contabilmente, porém incompatível com a prática e fonte certa de registro incorreto.
+- **Por quê.** O mercado funciona assim: o cliente paga "o que dá", e o caderno registra o nome, não a compra. Ligar o abatimento a uma venda obrigaria o operador a escolher qual compra está sendo paga, escolha que ninguém faz hoje e que geraria dado falso.
+- **Alternativa descartada.** Contas a receber por venda. Seria mais correto do ponto de vista contábil, mas não corresponde à prática e levaria a registros errados.
 - **Consequência.** Saldo devedor é atributo derivado e confiável, com histórico completo de pagamentos parciais (PB-08). Se no futuro o mercado quiser baixa por compra, basta acrescentar o vínculo opcional entre abatimento e venda; o modelo não precisa ser refeito.
 
 #### D-09. HISTORICO_PRECO como entidade
@@ -1300,12 +1309,12 @@ Esta seção responde à pergunta: **"de onde veio esta decisão?"**. Cada decis
 #### D-14. Atributos derivados explicitamente marcados
 
 - **Decisão.** Saldo de estoque, saldo devedor do cliente, totais da venda, valor esperado do caixa, diferença de caixa, juros pagos e dias para vencer são marcados como derivados.
-- **Por quê.** Sinalizar que **não** devem ser digitados evita a principal fonte de inconsistência de sistemas pequenos: um total gravado que deixa de bater com suas partes.
-- **Consequência.** No modelo físico, poderão ser materializados por desempenho, mas sempre com regra de recálculo. A decisão fica registrada aqui para não se perder nas próximas entregas.
+- **Por quê.** Marcar que esses valores não são digitados evita a causa mais comum de inconsistência em sistemas pequenos: um total gravado que deixa de bater com as partes.
+- **Consequência.** No modelo físico, eles poderão ser gravados para ganhar desempenho, desde que tenham regra de recálculo. A decisão fica registrada aqui para as próximas entregas.
 
 ### 17.2 Matriz de rastreabilidade
 
-A matriz fecha o ciclo do teste de consistência: mostra que **todo problema levantado gerou requisito, todo requisito é sustentado por regra e toda regra se materializa em elementos do modelo**. Se alguma linha ficasse incompleta, haveria incoerência entre os artefatos.
+A matriz completa o teste de consistência. Ela mostra que cada problema gerou pelo menos um requisito, que cada requisito tem regra que o sustenta e que cada regra aparece no modelo. Uma linha incompleta indicaria incoerência entre os artefatos.
 
 | Problema | Requisitos | Regras / políticas | Entidades e relacionamentos | Fluxo |
 | --- | --- | --- | --- | --- |
@@ -1332,7 +1341,7 @@ A matriz fecha o ciclo do teste de consistência: mostra que **todo problema lev
 
 ### 17.3 Escalabilidade, integração e evolução do modelo
 
-O manual afirma que o DER não deve apenas organizar, mas sustentar a evolução do sistema. Um modelo escalável é o que permite acrescentar sem reescrever. Foram feitas escolhas deliberadas para isso.
+O manual pede que o DER sustente a evolução do sistema. Na prática, isso significa poder acrescentar partes sem reescrever as existentes. A tabela abaixo mostra as extensões previstas.
 
 **Pontos de extensão já preparados**
 
@@ -1357,11 +1366,11 @@ O manual afirma que o DER não deve apenas organizar, mas sustentar a evolução
 
 **Continuidade para as próximas entregas**
 
-Na sequência prevista (modelo lógico, normalização, modelo físico e banco de dados), este modelo conceitual produzirá: (a) três tabelas associativas a partir dos N:N identificados (produto-fornecedor, item de pedido e funcionário-permissão); (b) a normalização do atributo multivalorado FORNECEDOR.contatos e do composto CLIENTE.endereco; (c) a transposição direta das chaves primárias e estrangeiras já definidas nesta etapa (seção 12.2); e (d) a decisão sobre materializar ou calcular os atributos derivados já identificados na seção 15. Nenhuma dessas etapas exigirá rever as entidades, porque elas foram derivadas de regras de negócio, e não de telas ou de suposições.
+Nas próximas entregas (modelo lógico, normalização, modelo físico e banco de dados), este modelo vai gerar: (a) três tabelas associativas a partir dos N:N (produto-fornecedor, item de pedido e funcionário-permissão); (b) a normalização do multivalorado FORNECEDOR.contatos e do composto CLIENTE.endereco; (c) as chaves primárias e estrangeiras já definidas na seção 12.2, transpostas diretamente; e (d) a decisão de gravar ou calcular os atributos derivados da seção 15. Como as entidades vieram das regras de negócio, essas etapas não devem exigir mudanças nelas.
 
 ### 17.4 Premissas adotadas e lacunas da entrevista
 
-Registrar o que **não** se sabe é parte do trabalho de análise. As perguntas abaixo não foram respondidas, foram respondidas com "?", ficaram em aberto na entrevista ou decorrem da escolha de chaves naturais (D-13). Para cada uma foi adotada uma premissa explícita, de modo que o modelo não dependa de invenção silenciosa. Todas devem ser confirmadas com o gerente antes da modelagem lógica.
+As perguntas abaixo ficaram sem resposta, foram respondidas com "?", ficaram em aberto na entrevista ou surgiram da escolha de chaves naturais (D-13). Para cada uma adotamos uma premissa explícita, para que o modelo não dependa de suposições escondidas. Todas precisam ser confirmadas com o gerente antes da modelagem lógica.
 
 | Lacuna | Premissa adotada | Risco se a premissa estiver errada |
 | --- | --- | --- |
@@ -1381,19 +1390,19 @@ Registrar o que **não** se sabe é parte do trabalho de análise. As perguntas 
 | Uma venda pode ser paga duas vezes na mesma forma (dois cartões de crédito)? | Registra-se um pagamento por forma em cada venda, com o valor somado | Baixo: não afeta faturamento nem previsão de crédito |
 | Localização e razão social formal da empresa | Mantidas em aberto para preenchimento pela equipe | Nenhum impacto no modelo |
 
-> **Observação metodológica.** Três respostas da entrevista indicam processos que hoje **não existem** ("não registramos", "não", "não sei responder"). Elas não foram tratadas como ausência de requisito, e sim como a principal origem de requisito: é exatamente onde o sistema precisa criar informação que hoje não existe. Por isso PB-01, PB-04 e PB-12 geraram algumas das entidades mais importantes do modelo.
+> **Observação metodológica.** Três respostas da entrevista mostram processos que hoje não existem ("não registramos", "não", "não sei responder"). Elas foram tratadas como origem de requisito: é onde o sistema precisa criar informação. Por isso PB-01, PB-04 e PB-12 deram origem a algumas das entidades mais importantes do modelo.
 
 ---
 
 ## 18. Conclusão
 
-O Mercado Parque Boturussu opera há 17 anos com processos que funcionam, mas com informação dispersa entre um sistema de caixa, aplicativos de maquininhas, cadernos e papéis. A análise mostrou que essa dispersão não é um conjunto de problemas independentes: quase todos derivam de uma única ausência, **o registro da entrada de mercadoria**. Sem ele não há estoque, não há validade, não há custo e, consequentemente, não há lucro apurado.
+O Supermercado Parque Boturussu funciona há 17 anos com processos que dão certo, mas com a informação espalhada entre o sistema do caixa, os aplicativos das maquininhas, cadernos e papéis. A análise mostrou que quase todos os problemas vêm da mesma falta: a entrada de mercadoria não é registrada. Sem esse registro não há estoque, validade nem custo, e portanto não há lucro apurado.
 
-O modelo conceitual construído nesta entrega ataca essa causa. A cadeia RECEBIMENTO → LOTE → MOVIMENTACAO_ESTOQUE resolve simultaneamente as três prioridades declaradas pelo gerente; ITEM_VENDA com preço e custo congelados torna possível medir o lucro; PAGAMENTO_VENDA com prazo de crédito viabiliza o alerta financeiro que ele classificou como muito desejado; e ABATIMENTO_FIADO substitui o caderno preservando o histórico.
+O modelo conceitual desta entrega parte desse ponto. A sequência RECEBIMENTO → LOTE → MOVIMENTACAO_ESTOQUE atende as três prioridades do gerente. ITEM_VENDA, com preço e custo congelados, permite medir o lucro. PAGAMENTO_VENDA, com prazo de crédito, permite o alerta financeiro que o gerente pediu. E ABATIMENTO_FIADO substitui o caderno sem perder o histórico.
 
-Mais importante do que o desenho é a origem de cada decisão. Toda entidade, todo atributo, todo relacionamento e toda cardinalidade deste documento pode ser rastreada até uma resposta da entrevista, um problema identificado, um requisito e uma regra de negócio, e essa rastreabilidade está formalizada na seção 17.2. É isso que permite responder à pergunta central do projeto: **"de onde veio esta decisão?"**.
+Cada entidade, atributo, relacionamento e cardinalidade deste documento pode ser ligado a uma resposta da entrevista, um problema, um requisito e uma regra de negócio. A seção 17.2 registra essas ligações.
 
-As próximas etapas (modelo lógico, normalização e modelo físico) encontrarão um modelo conceitual estável, porque ele foi derivado do funcionamento real do negócio e não de uma tela imaginada. E, quando o mercado crescer (segunda loja, importação de notas, conciliação de cartões), o modelo admite a extensão sem reescrita, conforme demonstrado na seção 17.3.
+As próximas etapas (modelo lógico, normalização e modelo físico) partem de um modelo derivado do funcionamento real do mercado. E se o mercado crescer, com uma segunda loja, importação de notas ou conciliação de cartões, o modelo pode ser estendido sem ser reescrito, como mostra a seção 17.3.
 
 ---
 
@@ -1462,4 +1471,7 @@ As próximas etapas (modelo lógico, normalização e modelo físico) encontrar�
 - [x] Premissas e lacunas (17.4)
 - [x] README do repositório
 - [x] Identificação da equipe
+
+---
+
 
