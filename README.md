@@ -28,8 +28,6 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 17. [Justificativas técnicas](#17-justificativas-técnicas)
 18. [Conclusão](#18-conclusão)
 - [Apêndice: teste de consistência e checklist](#apêndice-teste-de-consistência-e-checklist)
-- [Estrutura do repositório](#estrutura-do-repositório)
-
 ---
 
 ## 1. Identificação da equipe
