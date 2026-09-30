@@ -34,20 +34,19 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 
 ## 1. Identificação da equipe
 
-| Integrante |
-| --- |
-| Eduardo Silva Morishita |
-| Felipe de Oliveira Brito |
-| Lucas Trevezan Lima |
-| Marcelo Gabriel Alves |
-| Theo Carlo Oliveira Mosesto |
-| Veronica dos Santos Lima |
-| Victor Correa |
-| Victor Hugo Gonzaga |
-| Vinícius Henrique Silva Ferreira |
-| Vinícius Santos Conceição |
-| Yuri Bezerra Rodrigues Silva |
-
+| Integrante | RGM |
+| --- | --- |
+| Eduardo Silva Morishita | 48501883 |
+| Felipe de Oliveira Brito | 47639890 |
+| Lucas Trevezan Lima | 47656395 |
+| Marcelo Gabriel Alves | 47273496 |
+| Theo Carlo Oliveira Mosesto | 47676850 |
+| Veronica dos Santos Lima | 48489841 |
+| Victor Correa | 47093102 |
+| Victor Hugo Gonzaga | 47300701 |
+| Vinícius Henrique Silva Ferreira | 47449438 |
+| Vinícius Santos Conceição | 47451530 |
+| Yuri Bezerra Rodrigues Silva | 47674628 |
 ---
 
 ## 2. Caracterização da empresa
