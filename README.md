@@ -1,4 +1,4 @@
-# Projeto ERP - Supermercado Parque Boturussu
+# Projeto ERP - Mercado Parque Boturussu
 
 **Projeto Integrador - Modelagem de Dados | Primeira Entrega: do problema real ao Modelo Conceitual de Dados**
 
@@ -56,7 +56,7 @@ Disciplina: Modelagem de Banco de Dados · Orientação: Prof. Clovis Jose Ramos
 
 | Item | Descrição |
 | --- | --- |
-| Nome | Supermercado Parque Boturussu |
+| Nome | Mercado Parque Boturussu |
 | Segmento | Comércio varejista de alimentos, mercado de bairro (micro/pequena empresa) |
 | Tempo de atuação | 17 anos no mesmo ponto |
 | Porte operacional | Aproximadamente 6 funcionários; 3 em operação por turno; 2 caixas (PDV) |
@@ -102,7 +102,7 @@ Segundo o próprio gerente, as informações que sustentam as decisões do merca
 
 ## 3. Justificativa da escolha
 
-Escolhemos o Supermercado Parque Boturussu porque ele reúne, em escala pequena e fácil de observar, o que um projeto de modelagem de dados precisa: processos completos e ligados entre si, informação espalhada em suportes que não se integram e decisões do gerente travadas por falta de dado confiável.
+Escolhemos o Mercado Parque Boturussu porque ele reúne, em escala pequena e fácil de observar, o que um projeto de modelagem de dados precisa: processos completos e ligados entre si, informação espalhada em suportes que não se integram e decisões do gerente travadas por falta de dado confiável.
 
 **a) Os processos são reais, repetitivos e encadeados.** Todo dia o mercado percorre o mesmo ciclo: compra → recebimento → formação de preço → estoque → venda → caixa → financeiro. Cada etapa usa o que a anterior produziu: o custo da nota forma o preço, o preço é cobrado na venda, a venda alimenta o caixa, e caixa e boletos dão o resultado. Isso permite trabalhar integração entre processos, e não só cadastros soltos.
 
@@ -1396,7 +1396,7 @@ As perguntas abaixo ficaram sem resposta, foram respondidas com "?", ficaram em 
 
 ## 18. Conclusão
 
-O Supermercado Parque Boturussu funciona há 17 anos com processos que dão certo, mas com a informação espalhada entre o sistema do caixa, os aplicativos das maquininhas, cadernos e papéis. A análise mostrou que quase todos os problemas vêm da mesma falta: a entrada de mercadoria não é registrada. Sem esse registro não há estoque, validade nem custo, e portanto não há lucro apurado.
+O Mercado Parque Boturussu funciona há 17 anos com processos que dão certo, mas com a informação espalhada entre o sistema do caixa, os aplicativos das maquininhas, cadernos e papéis. A análise mostrou que quase todos os problemas vêm da mesma falta: a entrada de mercadoria não é registrada. Sem esse registro não há estoque, validade nem custo, e portanto não há lucro apurado.
 
 O modelo conceitual desta entrega parte desse ponto. A sequência RECEBIMENTO → LOTE → MOVIMENTACAO_ESTOQUE atende as três prioridades do gerente. ITEM_VENDA, com preço e custo congelados, permite medir o lucro. PAGAMENTO_VENDA, com prazo de crédito, permite o alerta financeiro que o gerente pediu. E ABATIMENTO_FIADO substitui o caderno sem perder o histórico.
 
