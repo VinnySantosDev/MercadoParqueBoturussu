@@ -1,0 +1,233 @@
+﻿tabela;atributo;descricao;tipo;tamanho;pk;fk;nulo;unique;default;regra
+funcionario;id_funcionario;Identificador do funcionário;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta: evita espalhar o CPF pelas tabelas de operação (RNF-13); AUTO_INCREMENT"
+funcionario;cpf;CPF, só dígitos;CHAR;11;Não;Não;Não permitido;Sim;—;"Único; 11 dígitos; CHECK: ck_funcionario_cpf; UNIQUE: uq_funcionario_cpf"
+funcionario;login;Usuário de acesso ao sistema;VARCHAR;30;Não;Não;Não permitido;Sim;—;"Único (RNF-01); UNIQUE: uq_funcionario_login"
+funcionario;nome;Nome completo;VARCHAR;100;Não;Não;Não permitido;Não;—;—
+funcionario;telefone;Telefone de contato;VARCHAR;15;Não;Não;Permitido;Não;—;"Só dígitos, 10 ou 11; CHECK: ck_funcionario_tel"
+funcionario;funcao_principal;Função habitual;VARCHAR;20;Não;Não;Não permitido;Não;—;"CAIXA, BALANCA, REPOSICAO, GERENCIA. Descritiva: o que pode fazer vem de funcionario_permissao; CHECK: ck_funcionario_funcao"
+funcionario;data_admissao;Data de admissão;DATE;—;Não;Não;Permitido;Não;—;—
+funcionario;ativo;Se pode acessar o sistema;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;Inativo não opera (RNF-06: não se exclui)
+permissao;codigo_permissao;Código da permissão;VARCHAR;30;Sim;Não;Não permitido;Sim (PK);—;Chave natural: código fixo definido pelo sistema (D-13)
+permissao;descricao;O que a permissão libera;VARCHAR;150;Não;Não;Não permitido;Não;—;—
+funcionario_permissao;id_funcionario;Funcionário;INT UNSIGNED;—;Sim;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario
+funcionario_permissao;codigo_permissao;Permissão concedida;VARCHAR;30;Sim;Sim → permissao(codigo_permissao);Não permitido;Não;—;FK → permissao
+funcionario_permissao;data_concessao;Data da concessão;DATE;—;Sim;Não;Não permitido;Não;CURRENT_DATE;"Atributo do relacionamento; compõe a PK para permitir conceder de novo depois de revogar; CHECK: ck_fp_periodo"
+funcionario_permissao;data_revogacao;Data em que a permissão foi retirada;DATE;—;Não;Não;Permitido;Não;—;"Vazio = vigente. Revogar não apaga a linha: a auditoria precisa saber quem podia o quê em cada data (RNF-02); CHECK: ck_fp_periodo"
+categoria;codigo_categoria;Sigla do setor;VARCHAR;10;Sim;Não;Não permitido;Sim (PK);—;Chave natural controlada pelo mercado (D-13)
+categoria;nome;Nome do setor;VARCHAR;50;Não;Não;Não permitido;Sim;—;"Único; UNIQUE: uq_categoria_nome"
+categoria;controle_validade_rigoroso;Exige vigilância maior de validade;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;Alimentos básicos = verdadeiro (entrevista 2.15)
+categoria;dias_alerta_validade_padrao;Antecedência padrão do alerta de validade, em dias;SMALLINT UNSIGNED;—;Não;Não;Permitido;Não;—;—
+produto;id_produto;Identificador do produto;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+produto;codigo_categoria;Setor do produto;VARCHAR;10;Não;Sim → categoria(codigo_categoria);Não permitido;Não;—;FK → categoria (RN-01)
+produto;nome_produto;Nome padronizado (tipo, marca, variação);VARCHAR;120;Não;Não;Não permitido;Sim;—;"Único (chave alternativa); UNIQUE: uq_produto_nome"
+produto;marca;Marca;VARCHAR;60;Não;Não;Permitido;Não;—;Vazio em hortifruti
+produto;unidade_base;Unidade de contagem do estoque;CHAR;2;Não;Não;Não permitido;Não;—;"UN ou KG (RN-02); CHECK: ck_produto_unidade, ck_produto_peso_kg"
+produto;vendido_por_peso;Vendido fracionado na balança;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;"Se verdadeiro, unidade_base = KG (RN-02); CHECK: ck_produto_peso_kg"
+produto;controla_validade;Exige data de validade no lote;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;RN-15
+produto;dias_alerta_validade;Antecedência do alerta, em dias;SMALLINT UNSIGNED;—;Não;Não;Permitido;Não;—;Sobrepõe o padrão da categoria
+produto;estoque_minimo;Estoque mínimo, na unidade base;DECIMAL;12,3;Não;Não;Não permitido;Não;0;">= 0; dispara alerta (RF-19); CHECK: ck_produto_estoque_min"
+produto;margem_referencia;Margem de referência (%);DECIMAL;5,2;Não;Não;Permitido;Não;—;"0 a 300 (PO-09); CHECK: ck_produto_margem"
+produto;ativo;Em comercialização;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+embalagem;id_embalagem;Identificador da forma de venda;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+embalagem;id_produto;Produto da embalagem;INT UNSIGNED;—;Não;Sim → produto(id_produto);Não permitido;Não;—;FK → produto (RN-03)
+embalagem;codigo_barras;GTIN/EAN de fábrica ou código interno (prefixo 2);VARCHAR;14;Não;Não;Permitido;Sim;—;"Único quando existir (RN-04); CHECK: ck_embalagem_codigo, ck_embalagem_barras_fmt; UNIQUE: uq_embalagem_barras"
+embalagem;codigo_balanca;Código do item na balança (PLU);VARCHAR;6;Não;Não;Permitido;Sim;—;"Único quando existir; usado nos itens pesados (RN-04); CHECK: ck_embalagem_codigo, ck_embalagem_balanca_fmt; UNIQUE: uq_embalagem_balanca"
+embalagem;descricao;Descrição da forma de venda;VARCHAR;60;Não;Não;Não permitido;Não;—;Ex.: 'Lata 350 ml', 'Fardo 12 un', 'Quilo'
+embalagem;fator_conversao;Unidades base por embalagem;DECIMAL;10,3;Não;Não;Não permitido;Não;—;"> 0 (fardo 12 = 12); CHECK: ck_embalagem_fator"
+embalagem;preco_venda;Preço de venda vigente;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0; toda alteração gera historico_preco (RN-06); CHECK: ck_embalagem_preco"
+embalagem;ativa;Pode ser vendida;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+historico_preco;id_historico;Identificador da alteração;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+historico_preco;id_embalagem;Embalagem alterada;INT UNSIGNED;—;Não;Sim → embalagem(id_embalagem);Não permitido;Não;—;FK → embalagem
+historico_preco;id_funcionario;Quem alterou;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (RN-07)
+historico_preco;data_hora;Momento da alteração;DATETIME;—;Não;Não;Não permitido;Não;CURRENT_TIMESTAMP;—
+historico_preco;preco_anterior;Preço antes da alteração;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_hp_precos"
+historico_preco;preco_novo;Preço depois da alteração;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0 e diferente do anterior; CHECK: ck_hp_precos"
+historico_preco;motivo;Razão da alteração;VARCHAR;25;Não;Não;Não permitido;Não;—;"REAJUSTE_FORNECEDOR, PROXIMO_VENCIMENTO, PROMOCAO, CORRECAO; CHECK: ck_hp_motivo"
+fornecedor;id_fornecedor;Identificador do fornecedor;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+fornecedor;tipo_documento;Tipo do documento;VARCHAR;4;Não;Não;Não permitido;Não;—;"CNPJ ou CPF (produtor rural); CHECK: ck_fornecedor_doc"
+fornecedor;documento;CNPJ (numérico ou alfanumérico) ou CPF;VARCHAR;14;Não;Não;Não permitido;Sim;—;"Único; CHECK: ck_fornecedor_doc; UNIQUE: uq_fornecedor_documento"
+fornecedor;razao_social;Nome jurídico ou nome do produtor;VARCHAR;120;Não;Não;Não permitido;Não;—;—
+fornecedor;nome_fantasia;Nome comercial;VARCHAR;80;Não;Não;Permitido;Não;—;—
+fornecedor;canal_pedido;Meio usual de pedido;VARCHAR;16;Não;Não;Não permitido;Não;—;"WHATSAPP, APLICATIVO, VENDEDOR_VISITA; CHECK: ck_fornecedor_canal"
+fornecedor;condicao_pagamento_padrao;Condição usual;VARCHAR;40;Não;Não;Permitido;Não;—;Ex.: 'À vista', '7/14/21 dias' (PO-10)
+fornecedor;ativo;Em uso;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+contato_fornecedor;id_fornecedor;Fornecedor;INT UNSIGNED;—;Sim;Sim → fornecedor(id_fornecedor);Não permitido;Não;—;FK → fornecedor
+contato_fornecedor;numero_contato;Sequência do contato no fornecedor;TINYINT UNSIGNED;—;Sim;Não;Não permitido;Não;—;Discriminador: 1, 2, 3…
+contato_fornecedor;nome;Nome do vendedor/representante;VARCHAR;80;Não;Não;Não permitido;Não;—;—
+contato_fornecedor;telefone;Telefone;VARCHAR;15;Não;Não;Não permitido;Não;—;"Só dígitos; CHECK: ck_contato_tel"
+contato_fornecedor;usa_whatsapp;Atende por WhatsApp;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;—
+produto_fornecedor;id_fornecedor;Fornecedor;INT UNSIGNED;—;Sim;Sim → fornecedor(id_fornecedor);Não permitido;Não;—;FK → fornecedor
+produto_fornecedor;id_produto;Produto;INT UNSIGNED;—;Sim;Sim → produto(id_produto);Não permitido;Não;—;FK → produto
+produto_fornecedor;codigo_no_fornecedor;Código do item no catálogo do fornecedor;VARCHAR;30;Não;Não;Permitido;Não;—;Depende do par (3FN: não fica em item_pedido)
+produto_fornecedor;ativo;Par ainda em uso;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+pedido_compra;id_pedido;Identificador do pedido;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta: pedido por WhatsApp não tem número; AUTO_INCREMENT"
+pedido_compra;id_fornecedor;Fornecedor;INT UNSIGNED;—;Não;Sim → fornecedor(id_fornecedor);Não permitido;Não;—;FK → fornecedor (RN-10)
+pedido_compra;id_funcionario;Quem fez o pedido;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (PO-01)
+pedido_compra;data_hora_pedido;Momento do pedido;DATETIME;—;Não;Não;Não permitido;Não;—;—
+pedido_compra;canal;Meio usado;VARCHAR;16;Não;Não;Não permitido;Não;—;"WHATSAPP, APLICATIVO, VENDEDOR_VISITA; CHECK: ck_pedido_canal"
+pedido_compra;cancelado;Pedido cancelado;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;—
+pedido_compra;observacao;Anotações;VARCHAR;200;Não;Não;Permitido;Não;—;—
+item_pedido;id_pedido;Pedido;INT UNSIGNED;—;Sim;Sim → pedido_compra(id_pedido);Não permitido;Não;—;FK → pedido_compra
+item_pedido;id_produto;Produto solicitado;INT UNSIGNED;—;Sim;Sim → produto(id_produto);Não permitido;Não;—;FK → produto
+item_pedido;quantidade_pedida;Quantidade pedida, na unidade base;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_ip_qtd"
+item_pedido;preco_negociado;Preço unitário combinado;DECIMAL;12,4;Não;Não;Permitido;Não;—;">= 0; CHECK: ck_ip_preco"
+recebimento;id_recebimento;Identificador do recebimento;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+recebimento;id_fornecedor;Emitente da nota;INT UNSIGNED;—;Não;Sim → fornecedor(id_fornecedor);Não permitido;Sim (composta);—;"FK → fornecedor (RN-12); UNIQUE: uq_recebimento_nota"
+recebimento;id_funcionario;Conferente;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (PO-05)
+recebimento;chave_acesso_nfe;Chave de acesso da NF-e;CHAR;44;Não;Não;Permitido;Sim;—;"Única quando existir; CHECK: ck_receb_nfe_fmt; UNIQUE: uq_recebimento_nfe"
+recebimento;modelo_nota;Modelo do documento fiscal;CHAR;2;Não;Não;Não permitido;Sim (composta);—;"Ex.: 55 (NF-e); CHECK: ck_receb_modelo; UNIQUE: uq_recebimento_nota"
+recebimento;serie_nota;Série da nota;SMALLINT UNSIGNED;—;Não;Não;Não permitido;Sim (composta);—;"0 a 999; CHECK: ck_receb_serie; UNIQUE: uq_recebimento_nota"
+recebimento;numero_nota;Número da nota;INT UNSIGNED;—;Não;Não;Não permitido;Sim (composta);—;"1 a 999.999.999; CHECK: ck_receb_numero; UNIQUE: uq_recebimento_nota"
+recebimento;data_hora;Momento da chegada;DATETIME;—;Não;Não;Não permitido;Não;—;—
+recebimento;valor_total_nota;Valor total da nota;DECIMAL;12,2;Não;Não;Não permitido;Não;—;">= 0; CHECK: ck_receb_valor"
+recebimento;volumes_nota;Volumes declarados na nota;SMALLINT UNSIGNED;—;Não;Não;Não permitido;Não;—;—
+recebimento;volumes_conferidos;Volumes efetivamente contados;SMALLINT UNSIGNED;—;Não;Não;Não permitido;Não;—;—
+recebimento;situacao;Resultado da conferência;VARCHAR;25;Não;Não;Não permitido;Não;—;"ACEITO, ACEITO_COM_DIVERGENCIA, RECUSADO; CHECK: ck_receb_situacao, ck_receb_obs"
+recebimento;observacao_divergencia;Descrição das divergências;VARCHAR;300;Não;Não;Permitido;Não;—;"Obrigatória se a situação não for ACEITO; CHECK: ck_receb_obs"
+item_recebimento;id_recebimento;Recebimento (nota);INT UNSIGNED;—;Sim;Sim → recebimento(id_recebimento);Não permitido;Sim (composta);—;"FK → recebimento; UNIQUE: uq_ir_lote_ref"
+item_recebimento;numero_item_nota;Número da linha na nota;SMALLINT UNSIGNED;—;Sim;Não;Não permitido;Sim (composta);—;"Discriminador natural impresso na nota; UNIQUE: uq_ir_lote_ref"
+item_recebimento;id_produto;Produto recebido;INT UNSIGNED;—;Não;"Sim → produto(id_produto); item_pedido(id_produto)";Não permitido;Sim (composta);—;"FK → produto; UNIQUE: uq_ir_lote_ref"
+item_recebimento;id_pedido;Pedido atendido por esta linha;INT UNSIGNED;—;Não;Sim → item_pedido(id_pedido);Permitido;Não;—;"Com id_produto, FK → item_pedido; vazio se não houve pedido"
+item_recebimento;quantidade_nota;Quantidade faturada, na unidade da nota;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_ir_qtd, ck_ir_aceita"
+item_recebimento;fator_conversao_compra;Unidades base por unidade da nota;DECIMAL;10,3;Não;Não;Não permitido;Não;1;"> 0 (caixa com 12 = 12); CHECK: ck_ir_fator, ck_ir_aceita"
+item_recebimento;valor_unitario_nota;Valor unitário na nota;DECIMAL;12,4;Não;Não;Não permitido;Não;—;">= 0 (bonificação = 0); CHECK: ck_ir_valor"
+item_recebimento;quantidade_aceita;Quantidade aceita, na unidade base;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"0 = linha recusada; não excede o faturado; CHECK: ck_ir_aceita, ck_ir_situacao"
+item_recebimento;situacao_item;Resultado da conferência da linha;VARCHAR;25;Não;Não;Não permitido;Não;—;"ACEITO, ACEITO_PARCIAL, RECUSADO, NAO_PEDIDO_DEVOLVIDO; CHECK: ck_ir_situacao"
+lote;id_lote;Identificador do lote;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta: permite 2 lotes na mesma linha de nota e lotes sem nota (D-02); AUTO_INCREMENT"
+lote;id_produto;Produto do lote;INT UNSIGNED;—;Não;"Sim → produto(id_produto); item_recebimento(id_produto)";Não permitido;Não;—;FK → produto
+lote;id_recebimento;Recebimento de origem;INT UNSIGNED;—;Não;Sim → item_recebimento(id_recebimento);Permitido;Não;—;"Com numero_item_nota e id_produto, FK → item_recebimento; CHECK: ck_lote_origem_nota"
+lote;numero_item_nota;Linha da nota de origem;SMALLINT UNSIGNED;—;Não;Sim → item_recebimento(numero_item_nota);Permitido;Não;—;CHECK: ck_lote_origem_nota
+lote;id_lote_reposto;Lote trocado que este lote repõe;INT UNSIGNED;—;Não;Sim → lote(id_lote);Permitido;Não;—;"FK → lote (autorrelacionamento R08); CHECK: ck_lote_origem_reposicao"
+lote;origem;Como o lote surgiu;VARCHAR;25;Não;Não;Não permitido;Não;—;"RECEBIMENTO, INVENTARIO_INICIAL, AJUSTE_INVENTARIO, REPOSICAO_FORNECEDOR; CHECK: ck_lote_origem, ck_lote_origem_nota, ck_lote_origem_reposicao, ck_lote_pendente"
+lote;codigo_lote_fabricante;Lote impresso pelo fabricante;VARCHAR;30;Não;Não;Permitido;Não;—;—
+lote;data_validade;Validade;DATE;—;Não;Não;Permitido;Não;—;Obrigatória se produto.controla_validade (verificada na auditoria A05)
+lote;data_entrada;Entrada no estoque;DATETIME;—;Não;Não;Não permitido;Não;—;—
+lote;custo_unitario;Custo por unidade base;DECIMAL;12,4;Não;Não;Não permitido;Não;—;">= 0; imutável após a entrada (RN-22); CHECK: ck_lote_custo"
+lote;situacao;Estado do lote;VARCHAR;15;Não;Não;Não permitido;Não;DISPONIVEL;"DISPONIVEL, SEPARADO_TROCA, TROCADO, DESCARTADO; CHECK: ck_lote_situacao"
+lote;pendente_conferencia;Lote de ajuste automático aguardando conferência física;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;"Só em lotes AJUSTE_INVENTARIO (RN-40); CHECK: ck_lote_pendente"
+caixa;numero_caixa;Número pintado no PDV;TINYINT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave natural estável (D-13); CHECK: ck_caixa_numero"
+caixa;ativo;Em uso;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+sessao_caixa;id_sessao;Identificador da sessão;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+sessao_caixa;numero_caixa;Caixa aberto;TINYINT UNSIGNED;—;Não;Sim → caixa(numero_caixa);Não permitido;Não;—;FK → caixa
+sessao_caixa;id_funcionario_abertura;Quem abriu;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario
+sessao_caixa;id_funcionario_fechamento;Quem fechou;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Permitido;Não;—;"FK → funcionario; vazio enquanto aberta; CHECK: ck_sessao_fechamento"
+sessao_caixa;data_hora_abertura;Abertura;DATETIME;—;Não;Não;Não permitido;Não;—;CHECK: ck_sessao_datas
+sessao_caixa;valor_inicial;Fundo de troco;DECIMAL;10,2;Não;Não;Não permitido;Não;—;">= 0 (não é fixo); CHECK: ck_sessao_valores"
+sessao_caixa;data_hora_fechamento;Fechamento;DATETIME;—;Não;Não;Permitido;Não;—;"Vazio = sessão aberta (a situação é derivada daqui); CHECK: ck_sessao_fechamento, ck_sessao_datas"
+sessao_caixa;valor_contado;Dinheiro contado no fechamento;DECIMAL;10,2;Não;Não;Permitido;Não;—;">= 0; CHECK: ck_sessao_valores, ck_sessao_fechamento"
+sessao_caixa;total_maquininhas_informado;Total do relatório das maquininhas;DECIMAL;12,2;Não;Não;Permitido;Não;—;">= 0; CHECK: ck_sessao_valores"
+sessao_caixa;justificativa_diferenca;Explicação de sobra/falta;VARCHAR;200;Não;Não;Permitido;Não;—;Exigida quando há diferença (auditoria A06)
+cliente;id_cliente;Identificador do cliente;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+cliente;cpf;CPF;CHAR;11;Não;Não;Permitido;Sim;—;"Único quando informado; obrigatório para autorizar fiado; CHECK: ck_cliente_cpf, ck_cliente_fiado_cpf; UNIQUE: uq_cliente_cpf"
+cliente;nome;Nome;VARCHAR;100;Não;Não;Não permitido;Não;—;—
+cliente;apelido;Como é conhecido no bairro;VARCHAR;40;Não;Não;Permitido;Não;—;—
+cliente;telefone;Telefone;VARCHAR;15;Não;Não;Permitido;Não;—;"Só dígitos; CHECK: ck_cliente_tel"
+cliente;logradouro;Rua/avenida;VARCHAR;100;Não;Não;Permitido;Não;—;Atributo composto endereço decomposto (1FN)
+cliente;numero_endereco;Número do imóvel;VARCHAR;10;Não;Não;Permitido;Não;—;—
+cliente;complemento;Complemento;VARCHAR;40;Não;Não;Permitido;Não;—;—
+cliente;bairro;Bairro;VARCHAR;50;Não;Não;Permitido;Não;—;—
+cliente;autorizado_fiado;Pode comprar fiado;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;"Só o gerente altera (PO-04); CHECK: ck_cliente_fiado_cpf"
+cliente;limite_fiado;Limite de dívida em aberto;DECIMAL;10,2;Não;Não;Permitido;Não;—;">= 0; CHECK: ck_cliente_limite"
+cliente;data_cadastro;Data do cadastro;DATE;—;Não;Não;Não permitido;Não;CURRENT_DATE;—
+venda;id_venda;Identificador da venda;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta: não depende do relógio, permite caixa offline (RNF-07); AUTO_INCREMENT"
+venda;id_sessao;Sessão de caixa;INT UNSIGNED;—;Não;Sim → sessao_caixa(id_sessao);Não permitido;Sim (composta);—;"FK → sessao_caixa (RN-20); UNIQUE: uq_venda_cupom"
+venda;id_funcionario;Operador;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario
+venda;id_cliente;Cliente identificado;INT UNSIGNED;—;Não;Sim → cliente(id_cliente);Permitido;Não;—;"FK → cliente; obrigatório se houver FIADO (auditoria A04)"
+venda;numero_cupom;Número do cupom;INT UNSIGNED;—;Não;Não;Não permitido;Sim (composta);—;"Único dentro da sessão; CHECK: ck_venda_cupom; UNIQUE: uq_venda_cupom"
+venda;data_hora;Momento da venda;DATETIME;—;Não;Não;Não permitido;Não;—;—
+venda;situacao;Estado;VARCHAR;10;Não;Não;Não permitido;Não;CONCLUIDA;"CONCLUIDA, CANCELADA; CHECK: ck_venda_situacao"
+item_venda;id_venda;Venda;INT UNSIGNED;—;Sim;Sim → venda(id_venda);Não permitido;Não;—;FK → venda
+item_venda;numero_item;Posição no cupom;SMALLINT UNSIGNED;—;Sim;Não;Não permitido;Não;—;Discriminador natural impresso no cupom
+item_venda;id_embalagem;Embalagem lida;INT UNSIGNED;—;Não;Sim → embalagem(id_embalagem);Não permitido;Não;—;FK → embalagem
+item_venda;id_funcionario_autorizador;Quem autorizou o desconto;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Permitido;Não;—;"FK → funcionario; obrigatório se houver desconto; CHECK: ck_iv_autorizacao"
+item_venda;quantidade;Quantidade na unidade da embalagem;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"> 0; fracionada para peso; CHECK: ck_iv_qtd"
+item_venda;preco_unitario_praticado;Preço no momento da venda;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0; não muda depois (RN-22); CHECK: ck_iv_preco, ck_iv_desconto"
+item_venda;desconto_unitario;Desconto por unidade;DECIMAL;10,2;Não;Não;Não permitido;Não;0;">= 0 e menor que o preço; CHECK: ck_iv_desconto, ck_iv_autorizacao"
+conta_financeira;id_conta_financeira;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+conta_financeira;nome;Nome da conta;VARCHAR;60;Não;Não;Não permitido;Sim;—;"Único; UNIQUE: uq_cf_nome"
+conta_financeira;tipo;Tipo;VARCHAR;16;Não;Não;Não permitido;Não;—;"CONTA_BANCARIA, CONTA_ADQUIRENTE, COFRE; CHECK: ck_cf_tipo"
+conta_financeira;saldo_inicial;Saldo na implantação;DECIMAL;12,2;Não;Não;Não permitido;Não;—;—
+conta_financeira;data_saldo_inicial;Data do saldo inicial;DATE;—;Não;Não;Não permitido;Não;—;—
+conta_financeira;ativa;Em uso;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+movimento_financeiro;id_movimento_fin;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+movimento_financeiro;id_conta_financeira;Conta;INT UNSIGNED;—;Não;Sim → conta_financeira(id_conta_financeira);Não permitido;Sim (composta);—;"FK → conta_financeira; UNIQUE: uq_mf_documento"
+movimento_financeiro;id_funcionario;Quem lançou;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Permitido;Não;—;"FK → funcionario; obrigatório em lançamento manual; CHECK: ck_mf_manual"
+movimento_financeiro;data_movimento;Data em que o valor entrou/saiu;DATE;—;Não;Não;Não permitido;Não;—;—
+movimento_financeiro;natureza;Sentido;VARCHAR;7;Não;Não;Não permitido;Não;—;"CREDITO, DEBITO; CHECK: ck_mf_natureza, ck_mf_origem"
+movimento_financeiro;origem;O que gerou;VARCHAR;20;Não;Não;Não permitido;Não;—;"REPASSE_CARTAO, PIX_RECEBIDO, RECOLHIMENTO_GAVETA, SUPRIMENTO_GAVETA, DEPOSITO, PAGAMENTO_CONTA, ESTORNO_DEVOLUCAO, TARIFA, AJUSTE; CHECK: ck_mf_origem, ck_mf_manual"
+movimento_financeiro;valor_bruto;Valor antes da taxa;DECIMAL;12,2;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_mf_valores"
+movimento_financeiro;valor_taxa;Taxa descontada;DECIMAL;12,2;Não;Não;Não permitido;Não;0;">= 0 e <= bruto; CHECK: ck_mf_valores"
+movimento_financeiro;documento_referencia;Identificação no extrato;VARCHAR;60;Não;Não;Permitido;Sim (composta);—;"Única por conta; UNIQUE: uq_mf_documento"
+forma_pagamento;codigo_forma;Código;VARCHAR;5;Sim;Não;Não permitido;Sim (PK);—;Chave natural fixa: DIN, DEB, CRE, PIX, VALE, FIADO (D-13)
+forma_pagamento;descricao;Nome exibido;VARCHAR;40;Não;Não;Não permitido;Não;—;—
+forma_pagamento;prazo_credito_dias;Dias até o crédito;SMALLINT UNSIGNED;—;Não;Não;Não permitido;Não;0;DIN/PIX = 0
+forma_pagamento;taxa_percentual;Taxa contratada (%);DECIMAL;5,2;Não;Não;Não permitido;Não;0;"0 a 100; CHECK: ck_fp_taxa"
+forma_pagamento;gera_divida;Cria dívida do cliente;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;"Só FIADO; CHECK: ck_fp_divida"
+forma_pagamento;exige_conciliacao;Valor cai em conta e deve ser conciliado;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;"DEB, CRE, PIX, VALE; CHECK: ck_fp_divida"
+forma_pagamento;ativa;Disponível no caixa;BOOLEAN;—;Não;Não;Não permitido;Não;TRUE;—
+pagamento_venda;id_venda;Venda paga;INT UNSIGNED;—;Sim;Sim → venda(id_venda);Não permitido;Não;—;FK → venda
+pagamento_venda;numero_pagamento;Sequência na venda;TINYINT UNSIGNED;—;Sim;Não;Não permitido;Não;—;Permite 2 pagamentos na mesma forma (T06)
+pagamento_venda;codigo_forma;Forma;VARCHAR;5;Não;Sim → forma_pagamento(codigo_forma);Não permitido;Não;—;"FK → forma_pagamento; CHECK: ck_pv_entregue, ck_pv_nsu, ck_pv_liquidacao"
+pagamento_venda;id_movimento_fin;Crédito que liquidou a transação;INT UNSIGNED;—;Não;Sim → movimento_financeiro(id_movimento_fin);Permitido;Não;—;"FK → movimento_financeiro; vazio = não conciliado (RN-36); CHECK: ck_pv_liquidacao"
+pagamento_venda;valor;Valor aplicado à venda;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0, já líquido de troco; CHECK: ck_pv_valor, ck_pv_entregue"
+pagamento_venda;valor_entregue;Dinheiro entregue pelo cliente;DECIMAL;10,2;Não;Não;Permitido;Não;—;"Só em DIN; >= valor; CHECK: ck_pv_entregue"
+pagamento_venda;nsu_autorizacao;NSU / ID da transação;VARCHAR;36;Não;Não;Permitido;Sim;—;"Obrigatório em DEB, CRE, PIX, VALE; único; CHECK: ck_pv_nsu; UNIQUE: uq_pv_nsu"
+movimentacao_caixa;id_mov_caixa;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+movimentacao_caixa;id_sessao;Sessão;INT UNSIGNED;—;Não;Sim → sessao_caixa(id_sessao);Não permitido;Não;—;FK → sessao_caixa
+movimentacao_caixa;id_funcionario;Quem executou;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (RN-29)
+movimentacao_caixa;id_movimento_fin;Lançamento no cofre gerado;INT UNSIGNED;—;Não;Sim → movimento_financeiro(id_movimento_fin);Permitido;Sim;—;"FK → movimento_financeiro; único; CHECK: ck_mc_cofre; UNIQUE: uq_mc_movimento"
+movimentacao_caixa;data_hora;Momento;DATETIME;—;Não;Não;Não permitido;Não;—;—
+movimentacao_caixa;tipo;Tipo;VARCHAR;25;Não;Não;Não permitido;Não;—;"SANGRIA, SUPRIMENTO, RECOLHIMENTO_FECHAMENTO, REEMBOLSO_DEVOLUCAO; CHECK: ck_mc_tipo, ck_mc_cofre"
+movimentacao_caixa;valor;Valor;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_mc_valor"
+movimentacao_caixa;motivo;Justificativa;VARCHAR;200;Não;Não;Não permitido;Não;—;Obrigatório (RN-29)
+devolucao;id_devolucao;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+devolucao;id_venda;Venda de origem;INT UNSIGNED;—;Não;Sim → item_venda(id_venda);Não permitido;Não;—;Com numero_item, FK → item_venda
+devolucao;numero_item;Item devolvido;SMALLINT UNSIGNED;—;Não;Sim → item_venda(numero_item);Não permitido;Não;—;—
+devolucao;id_funcionario;Autorizador;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (PO-13)
+devolucao;id_mov_caixa;Saída de dinheiro do reembolso;INT UNSIGNED;—;Não;Sim → movimentacao_caixa(id_mov_caixa);Permitido;Sim;—;"FK → movimentacao_caixa; obrigatória se DINHEIRO; CHECK: ck_dev_dinheiro; UNIQUE: uq_dev_mov_caixa"
+devolucao;id_movimento_fin;Estorno em conta;INT UNSIGNED;—;Não;Sim → movimento_financeiro(id_movimento_fin);Permitido;Sim;—;"FK → movimento_financeiro; obrigatório se ESTORNO_ELETRONICO; CHECK: ck_dev_estorno; UNIQUE: uq_dev_mov_fin"
+devolucao;data_hora;Momento;DATETIME;—;Não;Não;Não permitido;Não;—;—
+devolucao;quantidade_devolvida;Quantidade, na unidade da embalagem;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"> 0; não excede o vendido (auditoria A12); CHECK: ck_dev_qtd"
+devolucao;motivo;Motivo;VARCHAR;10;Não;Não;Não permitido;Não;—;"DEFEITO, VENCIDO (RN-28); CHECK: ck_dev_motivo"
+devolucao;destino;Destino do produto;VARCHAR;15;Não;Não;Não permitido;Não;—;"REVENDA, SEPARADO_TROCA, DESCARTE; CHECK: ck_dev_destino"
+devolucao;forma_reembolso;Reembolso;VARCHAR;20;Não;Não;Não permitido;Não;—;"TROCA_MESMO_PRODUTO, DINHEIRO, ESTORNO_ELETRONICO, ABATER_FIADO; CHECK: ck_dev_forma, ck_dev_valor, ck_dev_dinheiro, ck_dev_estorno"
+devolucao;valor_reembolsado;Valor devolvido;DECIMAL;10,2;Não;Não;Não permitido;Não;0;"0 na troca; > 0 nos demais; CHECK: ck_dev_valor"
+movimentacao_estoque;id_movimentacao;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta: duas baixas no mesmo instante não colidem (T05); AUTO_INCREMENT"
+movimentacao_estoque;id_lote;Lote movimentado;INT UNSIGNED;—;Não;Sim → lote(id_lote);Não permitido;Não;—;FK → lote (RN-16)
+movimentacao_estoque;id_funcionario;Responsável;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Permitido;Não;—;"FK → funcionario; obrigatório em perdas, ajustes, inventário e troca (RN-18); CHECK: ck_me_responsavel"
+movimentacao_estoque;id_venda;Venda que gerou a baixa;INT UNSIGNED;—;Não;Sim → item_venda(id_venda);Permitido;Não;—;"Com numero_item, FK → item_venda; só em SAIDA_VENDA; CHECK: ck_me_venda, ck_me_venda_par"
+movimentacao_estoque;numero_item;Item do cupom;SMALLINT UNSIGNED;—;Não;Sim → item_venda(numero_item);Permitido;Não;—;CHECK: ck_me_venda, ck_me_venda_par
+movimentacao_estoque;id_devolucao;Devolução que gerou;INT UNSIGNED;—;Não;Sim → devolucao(id_devolucao);Permitido;Não;—;"FK → devolucao; só em DEVOLUCAO_CLIENTE e SAIDA_TROCA_CLIENTE; CHECK: ck_me_devolucao"
+movimentacao_estoque;data_hora;Momento;DATETIME;—;Não;Não;Não permitido;Não;—;—
+movimentacao_estoque;tipo;Natureza;VARCHAR;30;Não;Não;Não permitido;Não;—;"Entradas: ENTRADA_RECEBIMENTO, ENTRADA_INVENTARIO, TROCA_FORNECEDOR, DEVOLUCAO_CLIENTE, AJUSTE_INVENTARIO_ENTRADA. Saídas: SAIDA_VENDA, SAIDA_TROCA_CLIENTE, PERDA_VENCIMENTO, PERDA_AVARIA, AJUSTE_INVENTARIO_SAIDA; CHECK: ck_me_tipo, ck_me_venda, ck_me_devolucao, ck_me_responsavel, ck_me_motivo"
+movimentacao_estoque;quantidade;Quantidade na unidade base;DECIMAL;12,3;Não;Não;Não permitido;Não;—;"> 0; o tipo define o sinal; CHECK: ck_me_qtd"
+movimentacao_estoque;motivo;Justificativa;VARCHAR;200;Não;Não;Permitido;Não;—;"Obrigatória em perdas e ajustes; CHECK: ck_me_motivo"
+abatimento_fiado;id_abatimento;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;AUTO_INCREMENT
+abatimento_fiado;id_cliente;Cliente;INT UNSIGNED;—;Não;Sim → cliente(id_cliente);Não permitido;Não;—;FK → cliente
+abatimento_fiado;codigo_forma;Forma usada;VARCHAR;5;Não;Sim → forma_pagamento(codigo_forma);Não permitido;Não;—;"FK → forma_pagamento; nunca FIADO (RN-27); CHECK: ck_ab_forma, ck_ab_sessao, ck_ab_liquidacao"
+abatimento_fiado;id_funcionario;Quem recebeu;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario
+abatimento_fiado;id_sessao;Sessão em que o dinheiro entrou;INT UNSIGNED;—;Não;Sim → sessao_caixa(id_sessao);Permitido;Não;—;"FK → sessao_caixa; obrigatória em DIN; CHECK: ck_ab_sessao"
+abatimento_fiado;id_movimento_fin;Crédito que liquidou;INT UNSIGNED;—;Não;Sim → movimento_financeiro(id_movimento_fin);Permitido;Não;—;"FK → movimento_financeiro; só em formas eletrônicas; CHECK: ck_ab_liquidacao"
+abatimento_fiado;data_hora;Momento;DATETIME;—;Não;Não;Não permitido;Não;—;—
+abatimento_fiado;valor;Valor pago;DECIMAL;10,2;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_ab_valor"
+abatimento_fiado;observacao;Anotação;VARCHAR;200;Não;Não;Permitido;Não;—;—
+conta_pagar;id_conta;Identificador;INT UNSIGNED;—;Sim;Não;Não permitido;Sim (PK);—;"Chave substituta (D-13); AUTO_INCREMENT"
+conta_pagar;id_recebimento;Recebimento de origem;INT UNSIGNED;—;Não;Sim → recebimento(id_recebimento);Permitido;Sim (composta);—;"FK → recebimento; vazio em despesas fixas; CHECK: ck_cp_origem; UNIQUE: uq_cp_parcela"
+conta_pagar;credor;Quem recebe;VARCHAR;120;Não;Não;Não permitido;Não;—;—
+conta_pagar;numero_documento;Nº do boleto/guia/competência;VARCHAR;40;Não;Não;Permitido;Não;—;—
+conta_pagar;numero_parcela;Parcela;TINYINT UNSIGNED;—;Não;Não;Não permitido;Sim (composta);1;">= 1; CHECK: ck_cp_parcela; UNIQUE: uq_cp_parcela"
+conta_pagar;descricao;Descrição;VARCHAR;150;Não;Não;Não permitido;Não;—;—
+conta_pagar;categoria_despesa;Categoria;VARCHAR;18;Não;Não;Não permitido;Não;—;"FORNECEDOR, SIMPLES_NACIONAL, FOLHA, INTERNET, AGUA, LUZ, ALUGUEL, OUTROS; CHECK: ck_cp_categoria, ck_cp_origem"
+conta_pagar;valor_original;Valor da obrigação;DECIMAL;12,2;Não;Não;Não permitido;Não;—;"> 0; CHECK: ck_cp_valor"
+conta_pagar;data_vencimento;Vencimento;DATE;—;Não;Não;Não permitido;Não;—;—
+conta_pagar;prioridade;Prioridade;VARCHAR;5;Não;Não;Não permitido;Não;MEDIA;"ALTA, MEDIA, BAIXA (PO-06); CHECK: ck_cp_prioridade"
+conta_pagar;cancelada;Cancelada;BOOLEAN;—;Não;Não;Não permitido;Não;FALSE;—
+pagamento_conta;id_conta;Conta paga;INT UNSIGNED;—;Sim;Sim → conta_pagar(id_conta);Não permitido;Não;—;FK → conta_pagar
+pagamento_conta;numero_pagamento;Sequência na conta;TINYINT UNSIGNED;—;Sim;Não;Não permitido;Não;—;1, 2, 3…
+pagamento_conta;id_funcionario;Quem registrou;INT UNSIGNED;—;Não;Sim → funcionario(id_funcionario);Não permitido;Não;—;FK → funcionario (RN-35)
+pagamento_conta;id_movimento_fin;Saída de dinheiro;INT UNSIGNED;—;Não;Sim → movimento_financeiro(id_movimento_fin);Não permitido;Sim;—;"FK → movimento_financeiro; única (1:1); UNIQUE: uq_pc_movimento"
+pagamento_conta;data_pagamento;Data;DATE;—;Não;Não;Não permitido;Não;—;—
+pagamento_conta;valor_principal;Parte do valor original quitada;DECIMAL;12,2;Não;Não;Não permitido;Não;—;"> 0; soma <= valor original (auditoria A09); CHECK: ck_pc_valores, ck_pc_desconto"
+pagamento_conta;valor_juros_multa;Encargos;DECIMAL;12,2;Não;Não;Não permitido;Não;0;">= 0; CHECK: ck_pc_valores, ck_pc_desconto"
+pagamento_conta;valor_desconto;Desconto obtido;DECIMAL;12,2;Não;Não;Não permitido;Não;0;">= 0; CHECK: ck_pc_valores, ck_pc_desconto"
+pagamento_conta;observacao;Anotação;VARCHAR;200;Não;Não;Permitido;Não;—;—

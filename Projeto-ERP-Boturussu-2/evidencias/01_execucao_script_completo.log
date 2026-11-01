@@ -1,0 +1,485 @@
+TESTE DE EXECUÇÃO INTEGRAL — banco vazio → script_completo.sql
+SGBD: MySQL 8.0.46-0ubuntu0.24.04.4
+Início: 2026-10-31 18:28:42  Fim: 2026-10-31 18:28:44  Duração: 1.7 s
+Comando: mysql -u root --default-character-set=utf8mb4 -t < sql/script_completo.sql
+Código de saída: 0 (0 = sucesso, nenhum erro)
+
+Objetos criados e registros ao final do script (contagem exata, depois das operações do 07):
++-----------------------+-----------+
+| tabela                | registros |
++-----------------------+-----------+
+| funcionario           |         6 |
+| permissao             |        12 |
+| funcionario_permissao |        35 |
+| categoria             |         6 |
+| produto               |        38 |
+| embalagem             |        42 |
+| historico_preco       |         7 |
+| fornecedor            |         8 |
+| contato_fornecedor    |        11 |
+| produto_fornecedor    |        52 |
+| pedido_compra         |        48 |
+| item_pedido           |       197 |
+| recebimento           |        56 |
+| item_recebimento      |       231 |
+| lote                  |       290 |
+| caixa                 |         2 |
+| sessao_caixa          |        82 |
+| cliente               |        10 |
+| venda                 |      2210 |
+| item_venda            |      5431 |
+| conta_financeira      |         2 |
+| movimento_financeiro  |       680 |
+| forma_pagamento       |         6 |
+| pagamento_venda       |      2268 |
+| movimentacao_caixa    |        86 |
+| devolucao             |         4 |
+| movimentacao_estoque  |      5859 |
+| abatimento_fiado      |        11 |
+| conta_pagar           |       159 |
+| pagamento_conta       |        87 |
++-----------------------+-----------+
++-------+
+| views |
++-------+
+|    14 |
++-------+
+
+======================================================================
+SAÍDA COMPLETA DO SCRIPT
+======================================================================
++--------------------------------------+---------------------------------+--------------------+---------+-------------+------------------+-------------+------------+
+| produto                              | categoria                       | quantidade_vendida | unidade | faturamento | custo_mercadoria | lucro_bruto | margem_pct |
++--------------------------------------+---------------------------------+--------------------+---------+-------------+------------------+-------------+------------+
+| Cerveja Skol Lata 350 ml             | Bebidas                         |           2435.000 | UN      |     8863.28 |          6693.50 |     2169.78 |       24.5 |
+| Refrigerante Coca-Cola 2 L           | Bebidas                         |            502.000 | UN      |     5685.99 |          3707.40 |     1978.59 |       34.8 |
+| Arroz Tio João Tipo 1 5 kg           | Alimentos básicos               |            168.000 | UN      |     5527.20 |          4188.20 |     1339.00 |       24.2 |
+| Leite Integral Italac 1 L            | Frios, laticínios e congelados  |            842.000 | UN      |     5161.48 |          3782.74 |     1378.74 |       26.7 |
+| Carne Moída Patinho (kg)             | Carnes                          |             96.826 | KG      |     4252.53 |          3105.19 |     1147.34 |       27.0 |
+| Refrigerante Guaraná Antarctica 2 L  | Bebidas                         |            468.000 | UN      |     4207.32 |          2901.60 |     1305.72 |       31.0 |
+| Cerveja Brahma Lata 473 ml           | Bebidas                         |            708.000 | UN      |     3449.48 |          2548.80 |      900.68 |       26.1 |
+| Frango Coxa e Sobrecoxa (kg)         | Carnes                          |            162.437 | KG      |     2741.56 |          1868.03 |      873.53 |       31.9 |
+| Feijão Carioca Kicaldo 1 kg          | Alimentos básicos               |            279.000 | UN      |     2499.22 |          1890.40 |      608.82 |       24.4 |
+| Café Pilão Tradicional 500 g         | Alimentos básicos               |            104.000 | UN      |     2457.60 |          1803.80 |      653.80 |       26.6 |
++--------------------------------------+---------------------------------+--------------------+---------+-------------+------------------+-------------+------------+
++--------+--------------+-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| classe | qtd_produtos | faturamento | produtos                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
++--------+--------------+-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| A      |           18 |    59973.65 | Cerveja Skol Lata 350 ml; Refrigerante Coca-Cola 2 L; Arroz Tio João Tipo 1 5 kg; Leite Integral Italac 1 L; Carne Moída Patinho (kg); Refrigerante Guaraná Antarctica 2 L; Cerveja Brahma Lata 473 ml; Frango Coxa e Sobrecoxa (kg); Feijão Carioca Kicaldo 1 kg; Café Pilão Tradicional 500 g; Água Mineral Crystal 500 ml; Queijo Mussarela Fatiado (kg); Contrafilé (kg); Batata (kg); Banana Prata (kg); Tomate (kg); Ovos Brancos Grandes 12 un; Linguiça Toscana Seara (kg)          |
+| B      |           10 |    11338.70 | Sabão em Pó Omo 1,6 kg; Papel Higiênico Neve Pacote 4 rolos; Óleo de Soja Liza 900 ml; Presunto Cozido Sadia Fatiado (kg); Feijão Preto Camil 1 kg; Açúcar Refinado União 1 kg; Cebola (kg); Suco Del Valle Uva 1 L; Macarrão Espaguete Renata 500 g; Margarina Qualy 500 g                                                                                                                                                                                                                 |
+| C      |           10 |     4293.44 | Água Sanitária Qboa 2 L; Pão de Queijo Forno de Minas 400 g; Alface Crespa (unidade); Iogurte Batavo Morango 170 g; Detergente Ypê Neutro 500 ml; Farinha de Trigo Dona Benta 1 kg; Hambúrguer Seara 672 g; Esponja Scotch-Brite 3 un; Lentilha Yoki 500 g; Sal Refinado Cisne 1 kg                                                                                                                                                                                                         |
++--------+--------------+-------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++------------+------------+--------+-------------+--------------+-------------+------------+
+| dia        | dia_semana | vendas | faturamento | ticket_medio | lucro_bruto | margem_pct |
++------------+------------+--------+-------------+--------------+-------------+------------+
+| 2026-09-01 | ter        |     76 |     2738.68 |        36.04 |      830.69 |       30.3 |
+| 2026-09-02 | qua        |     76 |     2878.18 |        37.87 |      839.19 |       29.2 |
+| 2026-09-03 | qui        |     74 |     2281.57 |        30.83 |      695.44 |       30.5 |
+| 2026-09-04 | sex        |     98 |     3431.38 |        35.01 |     1015.63 |       29.6 |
+| 2026-09-05 | sáb        |     91 |     3340.03 |        36.70 |     1027.44 |       30.8 |
+| 2026-09-06 | dom        |     27 |      569.26 |        21.08 |      176.77 |       31.1 |
+| 2026-09-07 | seg        |     67 |     1828.83 |        27.30 |      543.28 |       29.7 |
+| 2026-09-08 | ter        |     76 |     2834.02 |        37.43 |      825.75 |       29.1 |
+| 2026-09-09 | qua        |     76 |     2853.44 |        37.55 |      849.94 |       29.8 |
+| 2026-09-10 | qui        |     75 |     3085.09 |        41.13 |      932.43 |       30.2 |
+| 2026-09-11 | sex        |     97 |     3343.30 |        34.47 |     1000.11 |       29.9 |
+| 2026-09-12 | sáb        |     93 |     3180.22 |        34.20 |      924.65 |       29.1 |
+| 2026-09-13 | dom        |     25 |      772.87 |        30.91 |      241.79 |       31.3 |
+| 2026-09-14 | seg        |     69 |     1520.55 |        22.04 |      462.83 |       30.4 |
+| 2026-09-15 | ter        |     73 |     2360.82 |        32.34 |      695.41 |       29.5 |
+| 2026-09-16 | qua        |     76 |     2795.91 |        36.79 |      836.30 |       29.9 |
+| 2026-09-17 | qui        |     78 |     2594.88 |        33.38 |      774.82 |       29.9 |
+| 2026-09-18 | sex        |     97 |     3389.42 |        34.94 |     1031.46 |       30.4 |
+| 2026-09-19 | sáb        |     97 |     3087.73 |        31.83 |      974.92 |       31.6 |
+| 2026-09-20 | dom        |     29 |      888.48 |        30.64 |      278.52 |       31.3 |
+| 2026-09-21 | seg        |     71 |     2266.68 |        31.93 |      718.87 |       31.7 |
+| 2026-09-22 | ter        |     76 |     2447.24 |        32.20 |      730.19 |       29.8 |
+| 2026-09-23 | qua        |     74 |     2661.93 |        35.97 |      796.11 |       29.9 |
+| 2026-09-24 | qui        |     76 |     2634.27 |        34.66 |      797.18 |       30.3 |
+| 2026-09-25 | sex        |     98 |     3708.00 |        37.88 |     1141.17 |       30.8 |
+| 2026-09-26 | sáb        |     97 |     3152.49 |        32.50 |      968.52 |       30.7 |
+| 2026-09-27 | dom        |     25 |      664.34 |        26.57 |      209.22 |       31.5 |
+| 2026-09-28 | seg        |     68 |     2096.62 |        30.83 |      613.97 |       29.3 |
+| 2026-09-29 | ter        |     76 |     2967.96 |        39.05 |      889.31 |       30.0 |
+| 2026-09-30 | qua        |     77 |     3231.60 |        41.97 |      984.35 |       30.5 |
++------------+------------+--------+-------------+--------------+-------------+------------+
++-------+---------------------+------------+-------------+---------------------+---------------------+--------------+
+| caixa | forma               | transacoes | valor_bruto | taxa_contratada_pct | custo_estimado_taxa | pct_no_caixa |
++-------+---------------------+------------+-------------+---------------------+---------------------+--------------+
+|     1 | Dinheiro            |        566 |    17756.56 |                0.00 |                0.00 |         31.1 |
+|     1 | Cartão de débito    |        478 |    15851.03 |                1.49 |              236.18 |         27.8 |
+|     1 | Pix                 |        339 |    12697.03 |                0.00 |                0.00 |         22.2 |
+|     1 | Cartão de crédito   |        214 |     7154.32 |                3.19 |              228.22 |         12.5 |
+|     1 | Vale-alimentação    |         70 |     2317.18 |                6.00 |              139.03 |          4.1 |
+|     1 | Fiado (caderno)     |         43 |     1314.90 |                0.00 |                0.00 |          2.3 |
+|     2 | Dinheiro            |        184 |     6434.60 |                0.00 |                0.00 |         34.7 |
+|     2 | Cartão de débito    |        144 |     4946.02 |                1.49 |               73.70 |         26.7 |
+|     2 | Pix                 |        116 |     3633.00 |                0.00 |                0.00 |         19.6 |
+|     2 | Cartão de crédito   |         74 |     2174.88 |                3.19 |               69.38 |         11.7 |
+|     2 | Fiado (caderno)     |         14 |      715.06 |                0.00 |                0.00 |          3.9 |
+|     2 | Vale-alimentação    |         26 |      634.98 |                6.00 |               38.10 |          3.4 |
++-------+---------------------+------------+-------------+---------------------+---------------------+--------------+
++---------+----------------------------+--------------------+---------------+------------------+--------------+--------+---------+----------------------+---------------+
+| id_lote | produto                    | categoria          | data_validade | dias_para_vencer | prazo_alerta | saldo  | unidade | valor_em_risco_custo | acao_sugerida |
++---------+----------------------------+--------------------+---------------+------------------+--------------+--------+---------+----------------------+---------------+
+|     263 | Carne Moída Patinho (kg)   | Carnes             | 2026-10-03    |                2 |            2 | 10.174 | KG      |               339.81 | Promover hoje |
+|     260 | Ovos Brancos Grandes 12 un | Alimentos básicos  | 2026-10-11    |               10 |           30 | 11.000 | UN      |               101.20 | Acompanhar    |
+|     287 | Ovos Brancos Grandes 12 un | Alimentos básicos  | 2026-10-17    |               16 |           30 | 13.000 | UN      |               119.60 | Acompanhar    |
++---------+----------------------------+--------------------+---------------+------------------+--------------+--------+---------+----------------------+---------------+
++--------------------------------------+---------------+----------------+---------+-------------------+-----------------+------------------------+--------------+
+| produto                              | estoque_atual | estoque_minimo | unidade | media_vendida_dia | sugestao_compra | fornecedor_mais_barato | ultimo_custo |
++--------------------------------------+---------------+----------------+---------+-------------------+-----------------+------------------------+--------------+
+| Refrigerante Guaraná Antarctica 2 L  |         0.000 |         18.000 | UN      |             18.00 |             144 | Bebidas Leste          |       6.2000 |
+| Queijo Mussarela Fatiado (kg)        |         0.413 |          2.000 | KG      |              1.43 |              12 | Vale Verde             |      32.0000 |
+| Detergente Ypê Neutro 500 ml         |        17.000 |         24.000 | UN      |              5.43 |              45 | Limpeza Total          |       1.9000 |
+| Papel Higiênico Neve Pacote 4 rolos  |         9.000 |         12.000 | UN      |              5.43 |              41 | Limpeza Total          |       6.4000 |
+| Cerveja Brahma Lata 473 ml           |        21.000 |         24.000 | UN      |             29.57 |             210 | Bebidas Leste          |       3.6000 |
+| Contrafilé (kg)                      |         1.792 |          2.000 | KG      |              1.38 |              10 | Frigo ZL               |      46.8000 |
++--------------------------------------+---------------+----------------+---------+-------------------+-----------------+------------------------+--------------+
++----------------------------+----------------+---------------+--------------+------------+---------------+------------------+----------------+------------------------+
+| cliente                    | apelido        | saldo_devedor | limite_fiado | pct_limite | ultima_compra | ultimo_pagamento | dias_sem_pagar | situacao               |
++----------------------------+----------------+---------------+--------------+------------+---------------+------------------+----------------+------------------------+
+| Severino Batista Souza     | Seu Biu        |        199.89 |       400.00 |         50 | 2026-09-30    | 2026-09-24       |              7 | Em dia                 |
+| José Aparecido Lima        | Zé da Oficina  |        178.28 |       300.00 |         59 | 2026-09-24    | 2026-09-25       |              6 | Em dia                 |
+| Maria das Graças Oliveira  | Dona Graça     |        164.54 |       350.00 |         47 | 2026-09-18    | 2026-09-28       |              3 | Em dia                 |
+| Francisco de Assis Pereira | Chico          |        149.01 |       150.00 |         99 | 2026-09-11    | NULL             |             23 | Nunca pagou — cobrar   |
+| Antônia Ferreira da Silva  |                |        148.29 |       250.00 |         59 | 2026-09-30    | 2026-09-29       |              2 | Em dia                 |
+| Cláudia Regina Matos       |                |         92.46 |       200.00 |         46 | 2026-09-29    | 2026-09-21       |             10 | Em dia                 |
+| Edson Rodrigues Moreira    |                |         19.76 |       200.00 |         10 | 2026-09-30    | 2026-09-26       |              5 | Em dia                 |
++----------------------------+----------------+---------------+--------------+------------+---------------+------------------+----------------+------------------------+
++-----------------+------------+-------------------------------------+----------------------------------+-------------------+----------------+----------------------+-----------------+-------------------+----------------------+
+| data_vencimento | prioridade | credor                              | descricao                        | categoria_despesa | valor_original | valor_principal_pago | saldo_em_aberto | situacao          | alerta               |
++-----------------+------------+-------------------------------------+----------------------------------+-------------------+----------------+----------------------+-----------------+-------------------+----------------------+
+| 2026-09-28      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1075 — parcela 3/3            | FORNECEDOR        |         255.00 |                 0.00 |          255.00 | ABERTA            | VENCIDA há 3 dia(s)  |
+| 2026-09-29      | ALTA       | Laticínios Vale Verde Ltda          | NF 1151 — parcela 2/3            | FORNECEDOR        |         226.30 |                90.52 |          135.78 | PARCIALMENTE_PAGA | VENCIDA há 2 dia(s)  |
+| 2026-10-01      | ALTA       | Laticínios Vale Verde Ltda          | NF 1237 — parcela 1/3            | FORNECEDOR        |         287.42 |                 0.00 |          287.42 | ABERTA            | Vence nesta semana   |
+| 2026-10-01      | ALTA       | Laticínios Vale Verde Ltda          | NF 1182 — parcela 2/3            | FORNECEDOR        |          16.80 |                 0.00 |           16.80 | ABERTA            | Vence nesta semana   |
+| 2026-10-01      | ALTA       | Laticínios Vale Verde Ltda          | NF 1086 — parcela 3/3            | FORNECEDOR        |          16.80 |                 0.00 |           16.80 | ABERTA            | Vence nesta semana   |
+| 2026-10-01      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1013 — parcela 3/3            | FORNECEDOR        |         373.84 |                 0.00 |          373.84 | ABERTA            | Vence nesta semana   |
+| 2026-10-01      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1068 — parcela 1/3            | FORNECEDOR        |         234.40 |                 0.00 |          234.40 | ABERTA            | Vence nesta semana   |
+| 2026-10-01      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1050 — parcela 2/3            | FORNECEDOR        |          97.33 |                 0.00 |           97.33 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1111 — parcela 3/3            | FORNECEDOR        |         160.00 |                 0.00 |          160.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1246 — parcela 1/3            | FORNECEDOR        |          38.33 |                 0.00 |           38.33 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1177 — parcela 1/3            | FORNECEDOR        |         605.60 |                 0.00 |          605.60 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1080 — parcela 3/3            | FORNECEDOR        |         559.60 |                 0.00 |          559.60 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1144 — parcela 2/3            | FORNECEDOR        |         372.60 |                 0.00 |          372.60 | ABERTA            | Vence nesta semana   |
+| 2026-10-02      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1076 — parcela 3/3            | FORNECEDOR        |         126.00 |                 0.00 |          126.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1211 — parcela 2/3            | FORNECEDOR        |         346.67 |                 0.00 |          346.67 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | ALTA       | Laticínios Vale Verde Ltda          | NF 1124 — parcela 3/3            | FORNECEDOR        |         288.86 |                 0.00 |          288.86 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | ALTA       | Laticínios Vale Verde Ltda          | NF 1195 — parcela 2/3            | FORNECEDOR        |         184.63 |                 0.00 |          184.63 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | ALTA       | Laticínios Vale Verde Ltda          | NF 1256 — parcela 1/3            | FORNECEDOR        |          42.60 |                 0.00 |           42.60 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1156 — parcela 1/3            | FORNECEDOR        |         467.60 |                 0.00 |          467.60 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1086 — parcela 3/3            | FORNECEDOR        |         442.30 |                 0.00 |          442.30 | ABERTA            | Vence nesta semana   |
+| 2026-10-03      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1126 — parcela 2/3            | FORNECEDOR        |         412.53 |                 0.00 |          412.53 | ABERTA            | Vence nesta semana   |
+| 2026-10-05      | ALTA       | Funcionários                        | Folha de pagamento — 09/2026     | FOLHA             |       13850.00 |                 0.00 |        13850.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-05      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1281 — parcela 1/3            | FORNECEDOR        |         330.83 |                 0.00 |          330.83 | ABERTA            | Vence nesta semana   |
+| 2026-10-05      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1150 — parcela 3/3            | FORNECEDOR        |         277.50 |                 0.00 |          277.50 | ABERTA            | Vence nesta semana   |
+| 2026-10-05      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1214 — parcela 2/3            | FORNECEDOR        |         150.00 |                 0.00 |          150.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | ALTA       | Laticínios Vale Verde Ltda          | NF 1202 — parcela 2/3            | FORNECEDOR        |         237.53 |                 0.00 |          237.53 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | ALTA       | Laticínios Vale Verde Ltda          | NF 1151 — parcela 3/3            | FORNECEDOR        |         226.30 |                 0.00 |          226.30 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | ALTA       | Laticínios Vale Verde Ltda          | NF 1261 — parcela 1/3            | FORNECEDOR        |         204.40 |                 0.00 |          204.40 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1117 — parcela 3/3            | FORNECEDOR        |        1022.40 |                 0.00 |         1022.40 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1216 — parcela 1/3            | FORNECEDOR        |         879.00 |                 0.00 |          879.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1171 — parcela 2/3            | FORNECEDOR        |         733.80 |                 0.00 |          733.80 | ABERTA            | Vence nesta semana   |
+| 2026-10-06      | MEDIA      | Nova Rota Distribuidora Ltda        | NF 1028 — parcela 3/3            | FORNECEDOR        |         168.66 |                 0.00 |          168.66 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1233 — parcela 2/3            | FORNECEDOR        |         211.67 |                 0.00 |          211.67 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1299 — parcela 1/3            | FORNECEDOR        |         133.33 |                 0.00 |          133.33 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1174 — parcela 3/3            | FORNECEDOR        |          75.00 |                 0.00 |           75.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1175 — parcela 1/3            | FORNECEDOR        |         599.33 |                 0.00 |          599.33 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1114 — parcela 3/3            | FORNECEDOR        |         502.00 |                 0.00 |          502.00 | ABERTA            | Vence nesta semana   |
+| 2026-10-07      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1137 — parcela 2/3            | FORNECEDOR        |         500.17 |                 0.00 |          500.17 | ABERTA            | Vence nesta semana   |
+| 2026-10-08      | ALTA       | Laticínios Vale Verde Ltda          | NF 1237 — parcela 2/3            | FORNECEDOR        |         287.42 |                 0.00 |          287.42 | ABERTA            | Vence nesta semana   |
+| 2026-10-08      | ALTA       | Laticínios Vale Verde Ltda          | NF 1182 — parcela 3/3            | FORNECEDOR        |          16.80 |                 0.00 |           16.80 | ABERTA            | Vence nesta semana   |
+| 2026-10-08      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1068 — parcela 2/3            | FORNECEDOR        |         234.40 |                 0.00 |          234.40 | ABERTA            | Vence nesta semana   |
+| 2026-10-08      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1050 — parcela 3/3            | FORNECEDOR        |          97.34 |                 0.00 |           97.34 | ABERTA            | Vence nesta semana   |
+| 2026-10-09      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1246 — parcela 2/3            | FORNECEDOR        |          38.33 |                 0.00 |           38.33 | ABERTA            | A vencer             |
+| 2026-10-09      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1177 — parcela 2/3            | FORNECEDOR        |         605.60 |                 0.00 |          605.60 | ABERTA            | A vencer             |
+| 2026-10-09      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1144 — parcela 3/3            | FORNECEDOR        |         372.60 |                 0.00 |          372.60 | ABERTA            | A vencer             |
+| 2026-10-10      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1211 — parcela 3/3            | FORNECEDOR        |         346.66 |                 0.00 |          346.66 | ABERTA            | A vencer             |
+| 2026-10-10      | ALTA       | Laticínios Vale Verde Ltda          | NF 1195 — parcela 3/3            | FORNECEDOR        |         184.64 |                 0.00 |          184.64 | ABERTA            | A vencer             |
+| 2026-10-10      | ALTA       | Laticínios Vale Verde Ltda          | NF 1256 — parcela 2/3            | FORNECEDOR        |          42.60 |                 0.00 |           42.60 | ABERTA            | A vencer             |
+| 2026-10-10      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1156 — parcela 2/3            | FORNECEDOR        |         467.60 |                 0.00 |          467.60 | ABERTA            | A vencer             |
+| 2026-10-10      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1126 — parcela 3/3            | FORNECEDOR        |         412.54 |                 0.00 |          412.54 | ABERTA            | A vencer             |
+| 2026-10-10      | MEDIA      | Vivanet Telecom                     | Internet fibra — 10/2026         | INTERNET          |         149.90 |                 0.00 |          149.90 | ABERTA            | A vencer             |
+| 2026-10-12      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1281 — parcela 2/3            | FORNECEDOR        |         330.83 |                 0.00 |          330.83 | ABERTA            | A vencer             |
+| 2026-10-12      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1214 — parcela 3/3            | FORNECEDOR        |         150.00 |                 0.00 |          150.00 | ABERTA            | A vencer             |
+| 2026-10-13      | ALTA       | Laticínios Vale Verde Ltda          | NF 1202 — parcela 3/3            | FORNECEDOR        |         237.53 |                 0.00 |          237.53 | ABERTA            | A vencer             |
+| 2026-10-13      | ALTA       | Laticínios Vale Verde Ltda          | NF 1261 — parcela 2/3            | FORNECEDOR        |         204.40 |                 0.00 |          204.40 | ABERTA            | A vencer             |
+| 2026-10-13      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1216 — parcela 2/3            | FORNECEDOR        |         879.00 |                 0.00 |          879.00 | ABERTA            | A vencer             |
+| 2026-10-13      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1171 — parcela 3/3            | FORNECEDOR        |         733.80 |                 0.00 |          733.80 | ABERTA            | A vencer             |
+| 2026-10-14      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1233 — parcela 3/3            | FORNECEDOR        |         211.66 |                 0.00 |          211.66 | ABERTA            | A vencer             |
+| 2026-10-14      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1299 — parcela 2/3            | FORNECEDOR        |         133.33 |                 0.00 |          133.33 | ABERTA            | A vencer             |
+| 2026-10-14      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1175 — parcela 2/3            | FORNECEDOR        |         599.33 |                 0.00 |          599.33 | ABERTA            | A vencer             |
+| 2026-10-14      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1137 — parcela 3/3            | FORNECEDOR        |         500.16 |                 0.00 |          500.16 | ABERTA            | A vencer             |
+| 2026-10-15      | ALTA       | Enel SP                             | Energia elétrica — 09/2026       | LUZ               |        1243.10 |                 0.00 |         1243.10 | ABERTA            | A vencer             |
+| 2026-10-15      | ALTA       | Laticínios Vale Verde Ltda          | NF 1237 — parcela 3/3            | FORNECEDOR        |         287.42 |                 0.00 |          287.42 | ABERTA            | A vencer             |
+| 2026-10-15      | MEDIA      | Limpeza Total Distribuidora Ltda    | NF 1068 — parcela 3/3            | FORNECEDOR        |         234.40 |                 0.00 |          234.40 | ABERTA            | A vencer             |
+| 2026-10-16      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1246 — parcela 3/3            | FORNECEDOR        |          38.34 |                 0.00 |           38.34 | ABERTA            | A vencer             |
+| 2026-10-16      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1177 — parcela 3/3            | FORNECEDOR        |         605.60 |                 0.00 |          605.60 | ABERTA            | A vencer             |
+| 2026-10-17      | ALTA       | Laticínios Vale Verde Ltda          | NF 1256 — parcela 3/3            | FORNECEDOR        |          42.60 |                 0.00 |           42.60 | ABERTA            | A vencer             |
+| 2026-10-17      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1156 — parcela 3/3            | FORNECEDOR        |         467.60 |                 0.00 |          467.60 | ABERTA            | A vencer             |
+| 2026-10-19      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1281 — parcela 3/3            | FORNECEDOR        |         330.84 |                 0.00 |          330.84 | ABERTA            | A vencer             |
+| 2026-10-20      | ALTA       | Receita Federal                     | Simples Nacional — DAS 09/2026   | SIMPLES_NACIONAL  |        5110.00 |                 0.00 |         5110.00 | ABERTA            | A vencer             |
+| 2026-10-20      | ALTA       | Laticínios Vale Verde Ltda          | NF 1261 — parcela 3/3            | FORNECEDOR        |         204.40 |                 0.00 |          204.40 | ABERTA            | A vencer             |
+| 2026-10-20      | MEDIA      | Distribuidora de Bebidas Leste Ltda | NF 1216 — parcela 3/3            | FORNECEDOR        |         879.00 |                 0.00 |          879.00 | ABERTA            | A vencer             |
+| 2026-10-21      | ALTA       | Frigorífico Zona Leste Ltda         | NF 1299 — parcela 3/3            | FORNECEDOR        |         133.34 |                 0.00 |          133.34 | ABERTA            | A vencer             |
+| 2026-10-21      | MEDIA      | Atacadão Alimentos Penha Ltda       | NF 1175 — parcela 3/3            | FORNECEDOR        |         599.34 |                 0.00 |          599.34 | ABERTA            | A vencer             |
+| 2026-10-26      | MEDIA      | Sabesp                              | Água e esgoto — 09/2026          | AGUA              |         205.70 |                 0.00 |          205.70 | ABERTA            | A vencer             |
++-----------------+------------+-------------------------------------+----------------------------------+-------------------+----------------+----------------------+-----------------+-------------------+----------------------+
++------------+--------------------+------------------+----------------+----------------------------+
+| dia        | entradas_previstas | saidas_previstas | saldo_previsto | alerta                     |
++------------+--------------------+------------------+----------------+----------------------------+
+| 2026-10-01 |            1598.86 |          1417.37 |       25759.95 |                            |
+| 2026-10-02 |             215.61 |          1862.13 |       24113.43 |                            |
+| 2026-10-03 |             140.87 |          2185.19 |       22069.11 |                            |
+| 2026-10-04 |             857.81 |             0.00 |       22926.92 |                            |
+| 2026-10-05 |             830.51 |         14608.33 |        9149.10 |                            |
+| 2026-10-06 |             103.09 |          3472.09 |        5780.10 |                            |
+| 2026-10-07 |             276.58 |          2021.50 |        4035.18 |                            |
+| 2026-10-08 |             412.62 |           635.96 |        3811.84 |                            |
+| 2026-10-09 |             349.48 |          1016.53 |        3144.79 |                            |
+| 2026-10-10 |             782.78 |          1603.94 |        2323.63 |                            |
+| 2026-10-11 |             328.79 |             0.00 |        2652.42 |                            |
+| 2026-10-12 |             465.59 |           480.83 |        2637.18 |                            |
+| 2026-10-13 |              84.56 |          2054.73 |         667.01 |                            |
+| 2026-10-14 |             241.51 |          1444.48 |        -535.96 | ALERTA: saldo insuficiente |
+| 2026-10-15 |             520.98 |          1764.92 |       -1779.90 | ALERTA: saldo insuficiente |
+| 2026-10-16 |             406.99 |           643.94 |       -2016.85 | ALERTA: saldo insuficiente |
+| 2026-10-17 |             492.86 |           510.20 |       -2034.19 | ALERTA: saldo insuficiente |
+| 2026-10-18 |             485.49 |             0.00 |       -1548.70 | ALERTA: saldo insuficiente |
+| 2026-10-19 |             533.23 |           330.84 |       -1346.31 | ALERTA: saldo insuficiente |
+| 2026-10-20 |             152.54 |          6193.40 |       -7387.17 | ALERTA: saldo insuficiente |
+| 2026-10-21 |             179.36 |           732.68 |       -7940.49 | ALERTA: saldo insuficiente |
++------------+--------------------+------------------+----------------+----------------------------+
++------------------------------------+---------------------------------+------------------+--------------+---------------------+---------------+
+| produto                            | categoria                       | perda_vencimento | perda_avaria | recuperado_na_troca | perda_liquida |
++------------------------------------+---------------------------------+------------------+--------------+---------------------+---------------+
+| Contrafilé (kg)                    | Carnes                          |           103.50 |         0.00 |                0.00 |        103.50 |
+| Batata (kg)                        | Hortifruti                      |             0.00 |        25.70 |                0.00 |         25.70 |
+| Refrigerante Coca-Cola 2 L         | Bebidas                         |             0.00 |        14.80 |                0.00 |         14.80 |
+| Cebola (kg)                        | Hortifruti                      |             0.00 |        14.10 |                0.00 |         14.10 |
+| Feijão Carioca Kicaldo 1 kg        | Alimentos básicos               |             0.00 |         6.80 |                0.00 |          6.80 |
+| Tomate (kg)                        | Hortifruti                      |             0.00 |         6.27 |                0.00 |          6.27 |
+| Banana Prata (kg)                  | Hortifruti                      |             0.00 |         5.93 |                0.00 |          5.93 |
+| Cerveja Skol Lata 350 ml           | Bebidas                         |             0.00 |         2.75 |                0.00 |          2.75 |
+| Iogurte Batavo Morango 170 g       | Frios, laticínios e congelados  |             2.10 |         0.00 |                0.00 |          2.10 |
+| Presunto Cozido Sadia Fatiado (kg) | Frios, laticínios e congelados  |           162.99 |         0.00 |              162.99 |          0.00 |
++------------------------------------+---------------------------------+------------------+--------------+---------------------+---------------+
++-----------------------------+-----------------+--------------------+----------------+------------------------+
+| produto                     | fornecedor      | data_ultima_compra | custo_unitario | diferenca_para_o_menor |
++-----------------------------+-----------------+--------------------+----------------+------------------------+
+| Arroz Tio João Tipo 1 5 kg  | Atacadão Penha  | 2026-09-30         |        24.9000 |                 0.0000 |
+| Arroz Tio João Tipo 1 5 kg  | Nova Rota       | 2026-09-15         |        25.4000 |                 0.5000 |
+| Leite Integral Italac 1 L   | Vale Verde      | 2026-09-29         |         4.6900 |                 0.0000 |
+| Leite Integral Italac 1 L   | Nova Rota       | 2026-09-15         |         5.2500 |                 0.5600 |
++-----------------------------+-----------------+--------------------+----------------+------------------------+
++-----------+----------------------------------+-------------+-----------------------+--------------------------------------+-------------------+---------------------+---------------------+
+| id_pedido | fornecedor                       | data_pedido | situacao              | produto                              | quantidade_pedida | quantidade_recebida | quantidade_pendente |
++-----------+----------------------------------+-------------+-----------------------+--------------------------------------+-------------------+---------------------+---------------------+
+|        33 | Laticínios Vale Verde Ltda       | 2026-09-21  | PARCIALMENTE_RECEBIDO | Leite Integral Italac 1 L            |            72.000 |              71.000 |               1.000 |
+|        47 | Laticínios Vale Verde Ltda       | 2026-09-30  | ABERTO                | Hambúrguer Seara 672 g               |             5.000 |               0.000 |               5.000 |
+|        47 | Laticínios Vale Verde Ltda       | 2026-09-30  | ABERTO                | Leite Integral Italac 1 L            |            60.000 |               0.000 |              60.000 |
+|        47 | Laticínios Vale Verde Ltda       | 2026-09-30  | ABERTO                | Pão de Queijo Forno de Minas 400 g   |             5.000 |               0.000 |               5.000 |
+|        47 | Laticínios Vale Verde Ltda       | 2026-09-30  | ABERTO                | Queijo Mussarela Fatiado (kg)        |            10.000 |               0.000 |              10.000 |
+|        48 | Limpeza Total Distribuidora Ltda | 2026-09-30  | ABERTO                | Água Sanitária Qboa 2 L              |            24.000 |               0.000 |              24.000 |
+|        48 | Limpeza Total Distribuidora Ltda | 2026-09-30  | ABERTO                | Detergente Ypê Neutro 500 ml         |            72.000 |               0.000 |              72.000 |
+|        48 | Limpeza Total Distribuidora Ltda | 2026-09-30  | ABERTO                | Esponja Scotch-Brite 3 un            |            11.000 |               0.000 |              11.000 |
+|        48 | Limpeza Total Distribuidora Ltda | 2026-09-30  | ABERTO                | Papel Higiênico Neve Pacote 4 rolos  |            36.000 |               0.000 |              36.000 |
+|        48 | Limpeza Total Distribuidora Ltda | 2026-09-30  | ABERTO                | Sabão em Pó Omo 1,6 kg               |            15.000 |               0.000 |              15.000 |
++-----------+----------------------------------+-------------+-----------------------+--------------------------------------+-------------------+---------------------+---------------------+
++-----------------------+--------+-------------+--------------+------------------+--------------------------+
+| operador              | vendas | faturamento | ticket_medio | sessoes_fechadas | soma_diferencas_dinheiro |
++-----------------------+--------+-------------+--------------+------------------+--------------------------+
+| Juliana Alves Rocha   |    600 |    21286.40 |        35.48 |               22 |                    -4.00 |
+| Rafael Nogueira Dias  |    637 |    20897.50 |        32.81 |               21 |                    -2.50 |
+| Mariana Souza Prado   |    525 |    18840.52 |        35.89 |               22 |                     0.00 |
+| Pedro Henrique Santos |    446 |    14605.14 |        32.75 |               17 |                     0.00 |
++-----------------------+--------+-------------+--------------+------------------+--------------------------+
++---------------------------------+-------------+------------------+------------------------+------------------------+
+| categoria                       | faturamento | custo_mercadoria | margem_sobre_venda_pct | markup_sobre_custo_pct |
++---------------------------------+-------------+------------------+------------------------+------------------------+
+| Alimentos básicos               |    17435.52 |         13002.50 |                   25.4 |                   34.1 |
+| Carnes                          |    10630.78 |          7568.50 |                   28.8 |                   40.5 |
+| Bebidas                         |    25499.88 |         17752.30 |                   30.4 |                   43.6 |
+| Frios, laticínios e congelados  |    10738.97 |          7435.91 |                   30.8 |                   44.4 |
+| Limpeza                         |     4340.59 |          2912.00 |                   32.9 |                   49.1 |
+| Hortifruti                      |     6960.05 |          4128.31 |                   40.7 |                   68.6 |
++---------------------------------+-------------+------------------+------------------------+------------------------+
++----------------------------------+---------------+---------+-----------+-------------------+----------------+
+| produto                          | estoque_atual | unidade | media_dia | dias_de_cobertura | capital_parado |
++----------------------------------+---------------+---------+-----------+-------------------+----------------+
+| Sal Refinado Cisne 1 kg          |        18.000 | UN      |      1.30 |              13.8 |          28.80 |
+| Óleo de Soja Liza 900 ml         |        58.000 | UN      |      5.60 |              10.4 |         365.40 |
+| Lentilha Yoki 500 g              |        10.000 | UN      |      1.03 |               9.7 |          61.00 |
+| Macarrão Espaguete Renata 500 g  |        48.000 | UN      |      6.47 |               7.4 |         153.60 |
+| Feijão Carioca Kicaldo 1 kg      |        64.000 | UN      |      9.30 |               6.9 |         435.20 |
+| Água Sanitária Qboa 2 L          |        24.000 | UN      |      3.47 |               6.9 |          98.40 |
+| Hambúrguer Seara 672 g           |         4.000 | UN      |      0.67 |               6.0 |          55.60 |
+| Esponja Scotch-Brite 3 un        |        11.000 | UN      |      1.87 |               5.9 |          46.20 |
+| Linguiça Toscana Seara (kg)      |        11.793 | KG      |      2.00 |               5.9 |         200.48 |
+| Margarina Qualy 500 g            |        14.000 | UN      |      2.40 |               5.8 |          96.60 |
++----------------------------------+---------------+---------+-----------+-------------------+----------------+
++--------------------------------+-------------------------------+-----------------+----------------+-------------+-----------------+-------------------+
+| credor                         | descricao                     | data_vencimento | data_pagamento | dias_atraso | valor_principal | valor_juros_multa |
++--------------------------------+-------------------------------+-----------------+----------------+-------------+-----------------+-------------------+
+| Enel SP                        | Energia elétrica — 08/2026    | 2026-09-15      | 2026-09-17     |           2 |         1186.40 |             24.51 |
+| Atacadão Alimentos Penha Ltda  | NF 1049 — parcela 2/3         | 2026-09-23      | 2026-09-28     |           5 |          231.15 |              5.00 |
++--------------------------------+-------------------------------+-----------------+----------------+-------------+-----------------+-------------------+
++---------+--------------------------------------+--------------------+---------------------+------------------+
+| id_lote | nome_produto                         | origem             | data_entrada        | quantidade_atual |
++---------+--------------------------------------+--------------------+---------------------+------------------+
+|     290 | Refrigerante Guaraná Antarctica 2 L  | AJUSTE_INVENTARIO  | 2026-09-30 19:11:59 |            0.000 |
+|      45 | Margarina Qualy 500 g                | INVENTARIO_INICIAL | 2026-09-01 06:30:00 |            5.000 |
++---------+--------------------------------------+--------------------+---------------------+------------------+
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
+| id_sessao | numero_caixa | data_hora_abertura  | fechada_por          | valor_esperado | valor_contado | diferenca_dinheiro | total_eletronico_registrado | total_maquininhas_informado | diferenca_eletronica |
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
+|        53 |            2 | 2026-09-19 16:00:00 | Juliana Alves Rocha  |         609.29 |        610.29 |               1.00 |                      443.33 |                      443.33 |                 0.00 |
+|        73 |            1 | 2026-09-27 07:00:00 | Rafael Nogueira Dias |         478.99 |        478.99 |               0.00 |                      335.35 |                      350.35 |                15.00 |
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
+| id_venda | numero_pagamento | codigo_forma | data_venda | nsu_autorizacao | valor | data_prevista_credito | dias_de_atraso |
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
+|      870 |                1 | DEB          | 2026-09-12 | 392530016714    | 32.90 | 2026-09-13            |             18 |
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
+| id_movimento_fin | data_movimento | documento_referencia | qtd_transacoes | bruto_previsto | valor_bruto | taxa_prevista | valor_taxa | taxa_cobrada_pct | diferenca_conciliacao |
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
+|              406 | 2026-09-20     | REP-DEB-20260919     |             27 |         797.78 |      797.78 |         11.89 |      15.88 |             1.99 |                 -3.99 |
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
+| id_conta | credor                       | descricao               | data_vencimento | valor_original | valor_principal_pago | saldo_em_aberto | situacao          | problema             |
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
+|       35 | Frigorífico Zona Leste Ltda  | NF 1075 — parcela 3/3   | 2026-09-28      |         255.00 |                 0.00 |          255.00 | ABERTA            | Vencida há 3 dia(s)  |
+|       79 | Laticínios Vale Verde Ltda   | NF 1151 — parcela 2/3   | 2026-09-29      |         226.30 |                90.52 |          135.78 | PARCIALMENTE_PAGA | Vencida há 2 dia(s)  |
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
+| id_lote | nome_produto                         | data_entrada        | quantidade_inicial | custo_unitario | quantidade_atual |
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
+|     290 | Refrigerante Guaraná Antarctica 2 L  | 2026-09-30 19:11:59 |              2.000 |         6.2000 |            0.000 |
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
++---------------------+------------+---------------------+---------------------+--------------------+
+| operacao            | referencia | funcionario         | quando              | permissao_exigida  |
++---------------------+------------+---------------------+---------------------+--------------------+
+| Desconto autorizado |        912 | Juliana Alves Rocha | 2026-09-12 19:36:00 | AUTORIZAR_DESCONTO |
++---------------------+------------+---------------------+---------------------+--------------------+
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
+| id_venda | numero_item | nome_produto               | data_hora           | quantidade_base | preco_liquido_unitario | custo_unitario | prejuizo_no_item |
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
+|     1180 |           4 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:12:51 |        2.000000 |                   1.99 |           7.40 |           -10.82 |
+|     1182 |           1 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:30:00 |        2.000000 |                   1.99 |           7.40 |           -10.82 |
+|     1181 |           2 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:19:58 |        1.000000 |                   1.99 |           7.40 |            -5.41 |
+|     1188 |           1 | Refrigerante Coca-Cola 2 L | 2026-09-17 10:45:00 |        1.000000 |                   1.99 |           7.40 |            -5.41 |
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
++------------+---------+--------------------------------------+----------------------+------------------+---------------+
+| etapa      | id_lote | nome_produto                         | pendente_conferencia | quantidade_atual | data_validade |
++------------+---------+--------------------------------------+----------------------+------------------+---------------+
+| OP01 antes |     290 | Refrigerante Guaraná Antarctica 2 L  |                    1 |            0.000 | NULL          |
++------------+---------+--------------------------------------+----------------------+------------------+---------------+
++-------------+---------+--------------------------------------+----------------------+------------------+---------------+
+| etapa       | id_lote | nome_produto                         | pendente_conferencia | quantidade_atual | data_validade |
++-------------+---------+--------------------------------------+----------------------+------------------+---------------+
+| OP01 depois |     290 | Refrigerante Guaraná Antarctica 2 L  |                    0 |           10.000 | 2027-01-20    |
++-------------+---------+--------------------------------------+----------------------+------------------+---------------+
++------------+---------+---------------+
+| etapa      | id_lote | data_validade |
++------------+---------+---------------+
+| OP02 antes |      45 | NULL          |
++------------+---------+---------------+
++-------------+---------+---------------+
+| etapa       | id_lote | data_validade |
++-------------+---------+---------------+
+| OP02 depois |      45 | 2026-10-04    |
++-------------+---------+---------------+
++------------+-----------+--------------+--------------------+----------------------+-------------------------+
+| etapa      | id_sessao | numero_caixa | diferenca_dinheiro | diferenca_eletronica | justificativa_diferenca |
++------------+-----------+--------------+--------------------+----------------------+-------------------------+
+| OP03 antes |        53 |            2 |               1.00 |                 0.00 | NULL                    |
+| OP03 antes |        73 |            1 |               0.00 |                15.00 | NULL                    |
++------------+-----------+--------------+--------------------+----------------------+-------------------------+
++-------------+---------------------------+
+| etapa       | sessoes_sem_justificativa |
++-------------+---------------------------+
+| OP03 depois |                         0 |
++-------------+---------------------------+
++------------+----------+------------------------------+-----------------+----------------+-----------------+----------+
+| etapa      | id_conta | credor                       | data_vencimento | valor_original | saldo_em_aberto | situacao |
++------------+----------+------------------------------+-----------------+----------------+-----------------+----------+
+| OP04 antes |       35 | Frigorífico Zona Leste Ltda  | 2026-09-28      |         255.00 |          255.00 | ABERTA   |
++------------+----------+------------------------------+-----------------+----------------+-----------------+----------+
++-------------+----------+----------------+----------------------+----------------+-----------------+----------+
+| etapa       | id_conta | valor_original | valor_principal_pago | encargos_pagos | saldo_em_aberto | situacao |
++-------------+----------+----------------+----------------------+----------------+-----------------+----------+
+| OP04 depois |       35 |         255.00 |               255.00 |           5.35 |            0.00 | PAGA     |
++-------------+----------+----------------+----------------------+----------------+-----------------+----------+
++------------+--------------+-----------+-------------+
+| etapa      | id_embalagem | descricao | preco_venda |
++------------+--------------+-----------+-------------+
+| OP05 antes |           27 | Caixa 1 L |        6.29 |
++------------+--------------+-----------+-------------+
++-------------+--------------+-------------+----------------+------------+---------------------+---------------------+
+| etapa       | id_embalagem | preco_venda | preco_anterior | preco_novo | motivo              | data_hora           |
++-------------+--------------+-------------+----------------+------------+---------------------+---------------------+
+| OP05 depois |           27 |        6.49 |           6.29 |       6.49 | REAJUSTE_FORNECEDOR | 2026-10-01 08:00:00 |
++-------------+--------------+-------------+----------------+------------+---------------------+---------------------+
++------------+------------+----------------------------+---------+--------------+---------------+-------------------+
+| etapa      | id_cliente | nome                       | apelido | limite_fiado | saldo_devedor | ultimo_abatimento |
++------------+------------+----------------------------+---------+--------------+---------------+-------------------+
+| OP06 antes |          6 | Francisco de Assis Pereira | Chico   |       150.00 |        149.01 | NULL              |
++------------+------------+----------------------------+---------+--------------+---------------+-------------------+
++-------------+------------+----------------------------+---------+--------------+---------------+-----------------------------------------------------+
+| etapa       | id_cliente | nome                       | apelido | limite_fiado | saldo_devedor | efeito                                              |
++-------------+------------+----------------------------+---------+--------------+---------------+-----------------------------------------------------+
+| OP06 depois |          6 | Francisco de Assis Pereira | Chico   |       100.00 |        149.01 | Acima do limite — novas compras fiadas bloqueadas   |
++-------------+------------+----------------------------+---------+--------------+---------------+-----------------------------------------------------+
++------------+---------------+----------------+--------------------+-------------+--------------+
+| etapa      | id_fornecedor | numero_contato | nome               | telefone    | usa_whatsapp |
++------------+---------------+----------------+--------------------+-------------+--------------+
+| OP07 antes |             1 |              1 | Fábio Martins      | 11940010001 |            1 |
+| OP07 antes |             1 |              2 | Central de pedidos | 1125550001  |            0 |
++------------+---------------+----------------+--------------------+-------------+--------------+
++-------------+---------------+----------------+--------------------+-------------+--------------+
+| etapa       | id_fornecedor | numero_contato | nome               | telefone    | usa_whatsapp |
++-------------+---------------+----------------+--------------------+-------------+--------------+
+| OP07 depois |             1 |              2 | Central de pedidos | 1125550001  |            0 |
+| OP07 depois |             1 |              3 | Renata Siqueira    | 11940010011 |            1 |
++-------------+---------------+----------------+--------------------+-------------+--------------+
++------------+-----------+--------------------------------------+-------------------+---------------------+
+| etapa      | id_pedido | nome_produto                         | quantidade_pedida | quantidade_recebida |
++------------+-----------+--------------------------------------+-------------------+---------------------+
+| OP08 antes |        48 | Detergente Ypê Neutro 500 ml         |            72.000 |               0.000 |
+| OP08 antes |        48 | Sabão em Pó Omo 1,6 kg               |            15.000 |               0.000 |
+| OP08 antes |        48 | Água Sanitária Qboa 2 L              |            24.000 |               0.000 |
+| OP08 antes |        48 | Papel Higiênico Neve Pacote 4 rolos  |            36.000 |               0.000 |
+| OP08 antes |        48 | Esponja Scotch-Brite 3 un            |            11.000 |               0.000 |
++------------+-----------+--------------------------------------+-------------------+---------------------+
++-------------+-----------+--------------------------------------+-------------------+---------------------+
+| etapa       | id_pedido | nome_produto                         | quantidade_pedida | quantidade_recebida |
++-------------+-----------+--------------------------------------+-------------------+---------------------+
+| OP08 depois |        48 | Detergente Ypê Neutro 500 ml         |            72.000 |               0.000 |
+| OP08 depois |        48 | Água Sanitária Qboa 2 L              |            24.000 |               0.000 |
+| OP08 depois |        48 | Papel Higiênico Neve Pacote 4 rolos  |            36.000 |               0.000 |
+| OP08 depois |        48 | Esponja Scotch-Brite 3 un            |            11.000 |               0.000 |
++-------------+-----------+--------------------------------------+-------------------+---------------------+
++------------+----------------------+------------------+----------------+----------------+
+| etapa      | nome                 | codigo_permissao | data_concessao | data_revogacao |
++------------+----------------------+------------------+----------------+----------------+
+| OP09 antes | Carlos Eduardo Lima  | ALTERAR_PRECO    | 2026-08-25     | NULL           |
+| OP09 antes | Mariana Souza Prado  | ALTERAR_PRECO    | 2026-08-25     | NULL           |
+| OP09 antes | Rafael Nogueira Dias | ALTERAR_PRECO    | 2026-08-25     | NULL           |
++------------+----------------------+------------------+----------------+----------------+
++-------------+----------------------+------------------+----------------+----------------+----------+
+| etapa       | nome                 | codigo_permissao | data_concessao | data_revogacao | situacao |
++-------------+----------------------+------------------+----------------+----------------+----------+
+| OP09 depois | Carlos Eduardo Lima  | ALTERAR_PRECO    | 2026-08-25     | NULL           | vigente  |
+| OP09 depois | Mariana Souza Prado  | ALTERAR_PRECO    | 2026-08-25     | NULL           | vigente  |
+| OP09 depois | Rafael Nogueira Dias | ALTERAR_PRECO    | 2026-08-25     | 2026-10-01     | revogada |
++-------------+----------------------+------------------+----------------+----------------+----------+
++--------------------------------------------+-------------+
+| auditoria                                  | ocorrencias |
++--------------------------------------------+-------------+
+| A05 depois                                 |           0 |
+| A06 depois                                 |           0 |
+| A09 depois (vencidas sem nenhum pagamento) |           0 |
+| A11 depois                                 |           0 |
++--------------------------------------------+-------------+

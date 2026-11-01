@@ -1,0 +1,190 @@
+Resultado da execução de 06_consultas_auditoria.sql — data de referência 01/10/2026
+
+====================================================================================================
+A01 — Vendas concluídas cujo total não bate com a soma dos pagamentos (RN-21)
+Verifica: venda paga a menos ou a mais (erro de caixa ou de registro).
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A02 — Itens de venda concluída sem baixa completa de estoque (RN-17, RN-22)
+Verifica: item cuja quantidade vendida (na unidade base) não foi toda baixada
+dos lotes — o estoque e o custo da venda estariam errados.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A03 — Lotes sem movimentação de entrada ou com saldo negativo (RN-16; cardinalidade LOTE 1,N)
+Verifica: “estoque fantasma” (lote sem origem) e baixa maior que o existente.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A04 — Venda fiada sem cliente identificado ou de cliente não autorizado (RN-24, PO-04)
+Verifica: fiado concedido fora da política. Limitação conhecida: o banco guarda a autorização
+VIGENTE do cliente, não o histórico dela; se o gerente suspender um cliente, as vendas antigas
+dele também aparecerão aqui. Por isso a suspensão do crédito é feita pelo limite (OP06).
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A05 — Lotes sem data de validade em produto que controla validade (RN-15)
+Verifica: lote que nunca aparecerá na lista de validades (prioridade nº 1).
+Linhas retornadas: 2
+
++---------+--------------------------------------+--------------------+---------------------+------------------+
+| id_lote | nome_produto                         | origem             | data_entrada        | quantidade_atual |
++---------+--------------------------------------+--------------------+---------------------+------------------+
+|     290 | Refrigerante Guaraná Antarctica 2 L  | AJUSTE_INVENTARIO  | 2026-09-30 19:11:59 |            0.000 |
+|      45 | Margarina Qualy 500 g                | INVENTARIO_INICIAL | 2026-09-01 06:30:00 |            5.000 |
++---------+--------------------------------------+--------------------+---------------------+------------------+
+
+====================================================================================================
+A06 — Sessões fechadas com diferença de caixa (dinheiro ou maquininhas) sem justificativa (RN-30)
+Verifica: sobra/falta que ninguém explicou.
+Linhas retornadas: 2
+
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
+| id_sessao | numero_caixa | data_hora_abertura  | fechada_por          | valor_esperado | valor_contado | diferenca_dinheiro | total_eletronico_registrado | total_maquininhas_informado | diferenca_eletronica |
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
+|        53 |            2 | 2026-09-19 16:00:00 | Juliana Alves Rocha  |         609.29 |        610.29 |               1.00 |                      443.33 |                      443.33 |                 0.00 |
+|        73 |            1 | 2026-09-27 07:00:00 | Rafael Nogueira Dias |         478.99 |        478.99 |               0.00 |                      335.35 |                      350.35 |                15.00 |
++-----------+--------------+---------------------+----------------------+----------------+---------------+--------------------+-----------------------------+-----------------------------+----------------------+
+
+====================================================================================================
+A07 — Transações de cartão/Pix/vale não creditadas após a data prevista (RN-36)
+Verifica: dinheiro que a operadora deveria ter pago e não pagou (conciliação).
+Tolerância de 1 dia útil após a data prevista.
+Linhas retornadas: 1
+
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
+| id_venda | numero_pagamento | codigo_forma | data_venda | nsu_autorizacao | valor | data_prevista_credito | dias_de_atraso |
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
+|      870 |                1 | DEB          | 2026-09-12 | 392530016714    | 32.90 | 2026-09-13            |             18 |
++----------+------------------+--------------+------------+-----------------+-------+-----------------------+----------------+
+
+====================================================================================================
+A08 — Créditos conciliados com divergência de valor ou taxa (RN-36)
+Verifica: repasse menor que o previsto (taxa acima da contratada ou transação faltante).
+Linhas retornadas: 1
+
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
+| id_movimento_fin | data_movimento | documento_referencia | qtd_transacoes | bruto_previsto | valor_bruto | taxa_prevista | valor_taxa | taxa_cobrada_pct | diferenca_conciliacao |
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
+|              406 | 2026-09-20     | REP-DEB-20260919     |             27 |         797.78 |      797.78 |         11.89 |      15.88 |             1.99 |                 -3.99 |
++------------------+----------------+----------------------+----------------+----------------+-------------+---------------+------------+------------------+-----------------------+
+
+====================================================================================================
+A09 — Contas a pagar: pagamento acima do valor original ou conta vencida sem quitação (RN-38)
+Verifica: erro de lançamento (pagou a mais) e obrigações em atraso (juros correndo).
+Linhas retornadas: 2
+
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
+| id_conta | credor                       | descricao               | data_vencimento | valor_original | valor_principal_pago | saldo_em_aberto | situacao          | problema             |
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
+|       35 | Frigorífico Zona Leste Ltda  | NF 1075 — parcela 3/3   | 2026-09-28      |         255.00 |                 0.00 |          255.00 | ABERTA            | Vencida há 3 dia(s)  |
+|       79 | Laticínios Vale Verde Ltda   | NF 1151 — parcela 2/3   | 2026-09-29      |         226.30 |                90.52 |          135.78 | PARCIALMENTE_PAGA | Vencida há 2 dia(s)  |
++----------+------------------------------+-------------------------+-----------------+----------------+----------------------+-----------------+-------------------+----------------------+
+
+====================================================================================================
+A10 — Lotes vencidos ainda disponíveis para venda (RN-19; fluxo F3)
+Verifica: a rotina diária de validade não foi executada para esse lote.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A11 — Lotes de ajuste automático aguardando conferência física (RN-40)
+Verifica: venda feita com saldo do sistema insuficiente que ainda não foi conferida.
+Linhas retornadas: 1
+
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
+| id_lote | nome_produto                         | data_entrada        | quantidade_inicial | custo_unitario | quantidade_atual |
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
+|     290 | Refrigerante Guaraná Antarctica 2 L  | 2026-09-30 19:11:59 |              2.000 |         6.2000 |            0.000 |
++---------+--------------------------------------+---------------------+--------------------+----------------+------------------+
+
+====================================================================================================
+A12 — Devoluções que somam mais do que foi vendido no item (RN-28)
+Verifica: devolução duplicada ou digitada errada.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A13 — Operações sensíveis feitas por quem não tinha a permissão (RN-07, RN-23, PO-11, PO-13, RNF-01)
+Verifica: o controle de acesso foi contornado (ex.: senha emprestada). A permissão é conferida
+NA DATA DA OPERAÇÃO (concessão e revogação), por isso revogar hoje não “suja” o passado.
+Linhas retornadas: 1
+
++---------------------+------------+---------------------+---------------------+--------------------+
+| operacao            | referencia | funcionario         | quando              | permissao_exigida  |
++---------------------+------------+---------------------+---------------------+--------------------+
+| Desconto autorizado |        912 | Juliana Alves Rocha | 2026-09-12 19:36:00 | AUTORIZAR_DESCONTO |
++---------------------+------------+---------------------+---------------------+--------------------+
+
+====================================================================================================
+A14 — Preço vigente diferente do último preço registrado no histórico (RN-06)
+Verifica: preço alterado direto na embalagem, sem deixar histórico.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A15 — Itens vendidos abaixo do custo (preço praticado menor que o custo dos lotes baixados)
+Verifica: erro de preço, desconto exagerado ou custo de lote digitado errado.
+Linhas retornadas: 4
+
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
+| id_venda | numero_item | nome_produto               | data_hora           | quantidade_base | preco_liquido_unitario | custo_unitario | prejuizo_no_item |
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
+|     1180 |           4 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:12:51 |        2.000000 |                   1.99 |           7.40 |           -10.82 |
+|     1182 |           1 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:30:00 |        2.000000 |                   1.99 |           7.40 |           -10.82 |
+|     1181 |           2 | Refrigerante Coca-Cola 2 L | 2026-09-17 09:19:58 |        1.000000 |                   1.99 |           7.40 |            -5.41 |
+|     1188 |           1 | Refrigerante Coca-Cola 2 L | 2026-09-17 10:45:00 |        1.000000 |                   1.99 |           7.40 |            -5.41 |
++----------+-------------+----------------------------+---------------------+-----------------+------------------------+----------------+------------------+
+
+====================================================================================================
+A16 — Baixa de venda feita em lote de outro produto (RN-17)
+Verifica: incoerência que a FK sozinha não impede (o lote é de um produto,
+o item é de uma embalagem — o produto dos dois precisa ser o mesmo).
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A17 — Nota de um fornecedor atendendo pedido de outro fornecedor (RN-11, RN-12)
+Verifica: vínculo indevido entre recebimento e pedido.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A18 — Linha de nota cuja soma dos lotes difere da quantidade aceita (RN-14)
+Verifica: estoque gerado a mais ou a menos que o aceito na conferência.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A19 — Fundo de troco: abertura diferente do que ficou na gaveta no fechamento anterior do mesmo caixa
+Verifica: dinheiro que “sumiu” ou “apareceu” entre duas sessões.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A20 — Venda baixada de lote que já estava vencido na data da venda (RN-17, RN-19, PO-07)
+Verifica: venda de produto vencido (risco sanitário e de reclamação).
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A21 — Cardinalidades mínimas 1 que a FK não consegue garantir (R02, R06, R12, R16, R27, R37)
+Verifica: “cabeçalho sem filho obrigatório”. A FK garante que o filho aponta para um pai existente,
+mas não que todo pai tenha ao menos um filho. Ex.: produto ativo sem embalagem ativa (não pode ser
+vendido — RN-03), pedido sem item, nota sem linha, venda sem item, devolução sem movimento de estoque.
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
+====================================================================================================
+A22 — Custo do lote diferente da sua origem (RN-19, RN-22; redundância controlada)
+Verifica: o custo copiado para o lote na entrada continua igual à fonte — linha da nota
+(valor unitário ÷ fator de conversão) ou, na reposição de troca, o custo do lote trocado.
+É a contrapartida de guardar o custo no lote (necessário para lotes sem nota).
+Linhas retornadas: 0 (nenhuma ocorrência: regra respeitada)
+
+
