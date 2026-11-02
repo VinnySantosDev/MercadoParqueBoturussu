@@ -25,7 +25,19 @@ Documento completo da entrega (formatado conforme a ABNT): [`docs/entrega-final/
 
 ## 2. Integrantes
 
-Identificação omitida nesta versão: por orientação do professor, a documentação é avaliada às cegas. A participação individual de cada integrante fica registrada no histórico de commits deste repositório e no diário de bordo, entregue separadamente. A organização do trabalho por blocos está em [`CONTRIBUICAO.md`](CONTRIBUICAO.md).
+| Integrante | RGM |
+| --- | --- |
+| Eduardo Silva Morishita | 48501883 |
+| Felipe de Oliveira Brito | 47639890 |
+| Lucas Trevezan Lima | 47656395 |
+| Marcelo Gabriel Alves | 47273496 |
+| Theo Carlo Oliveira Mosesto | 47676850 |
+| Veronica dos Santos Lima | 48489841 |
+| Victor Correa | 47093102 |
+| Victor Hugo Gonzaga | 47300701 |
+| Vinícius Henrique Silva Ferreira | 47449438 |
+| Vinícius Santos Conceição | 47451530 |
+| Yuri Bezerra Rodrigues Silva | 47674628 |
 
 ## 3. Empresa e problema
 
